@@ -1,6 +1,3 @@
-from myhdl import block, Signal, intbv
-from Utils import *
-from components.Gates import *
 from components.FlipFlops import *
 from components.OneHotDecoder import *
 
@@ -66,43 +63,43 @@ def control_logic(CLK, CLR, INST, Z,
 
     schematic = (
         #Combine SUB and SUBM signals
-        or_2_1(Y(6), Y(7), SUB),
+        or_2(Y(6), Y(7), SUB),
         
         # Inverse Z
-        not_1_1(Z, notZ),
+        not_1(Z, notZ),
 
         # IR_EN and ROM_EN via BUF
-        buf_1_1(Q(0), IR_EN),
-        buf_1_1(Q(0), ROM_EN),
+        buf_1(Q(0), IR_EN),
+        buf_1(Q(0), ROM_EN),
 
         #First layer of gates
-        or_2_1(Q(1), Q(2), OR_1),
-        or_3_1(Y(4), Y(5), SUB, OR_2),
-        and_2_1(Q(2), Y(5), RAM_WR),
-        or_2_1(Q(1), Q(2), OR_3),
-        or_2_1(Y(4), SUB, DATA_SEL),
-        and_2_1(Y(9), Z, AND_2),
-        and_2_1(Y(10), notZ, AND_3),
-        or_6_1(Y(0), Y(1), Y(2), Y(3), Y(4), SUB, OR_5),
-        or_2_1(Y(0), Y(4), ACC_CTL_bits[2]),
-        buf_1_1(Y(3), ACC_CTL_bits[1]),
-        or_2_1(Y(2), Y(7), ACC_CTL_bits[0]),
+        or_2(Q(1), Q(2), OR_1),
+        or_3(Y(4), Y(5), SUB, OR_2),
+        and_2(Q(2), Y(5), RAM_WR),
+        or_2(Q(1), Q(2), OR_3),
+        or_2(Y(4), SUB, DATA_SEL),
+        and_2(Y(9), Z, AND_2),
+        and_2(Y(10), notZ, AND_3),
+        or_6(Y(0), Y(1), Y(2), Y(3), Y(4), SUB, OR_5),
+        or_2(Y(0), Y(4), ACC_CTL_bits[2]),
+        buf_1(Y(3), ACC_CTL_bits[1]),
+        or_2(Y(2), Y(7), ACC_CTL_bits[0]),
 
         #Second layer of gates
-        and_2_1(OR_1, OR_2, RAM_EN),
-        and_2_1(OR_2, OR_3, ADDR_SEL),
-        or_3_1(Y(8), AND_2, AND_3, PC_LD),
-        and_2_1(OR_5, Q(2), ACC_EN),
+        and_2(OR_1, OR_2, RAM_EN),
+        and_2(OR_2, OR_3, ADDR_SEL),
+        or_3(Y(8), AND_2, AND_3, PC_LD),
+        and_2(OR_5, Q(2), ACC_EN),
 
         #Third layer of gates
-        not_1_1(PC_LD, notPC_LD),
-        and_2_1(PC_LD, Q(2), AND_7),
+        not_1(PC_LD, notPC_LD),
+        and_2(PC_LD, Q(2), AND_7),
 
         #Fourth layer of gates
-        and_2_1(notPC_LD, Q(1), AND_8),
+        and_2(notPC_LD, Q(1), AND_8),
 
         #Fifth layer of gates
-        or_2_1(AND_7, AND_8, PC_EN)
+        or_2(AND_7, AND_8, PC_EN)
     )
 
     if io is not None:

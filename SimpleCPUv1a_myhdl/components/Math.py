@@ -1,5 +1,3 @@
-from myhdl import *
-from components.Gates import *
 from components.Mux import *
 from Utils import *
 
@@ -17,8 +15,8 @@ def half_adder(A, B, SUM, CARRY):
     """
 
     schematic = (
-        xor_2_1(A, B, SUM),
-        and_2_1(A, B, CARRY)
+        xor_2(A, B, SUM),
+        and_2(A, B, CARRY)
     )
 
     return schematic
@@ -44,7 +42,7 @@ def full_adder(A, B, CIN, SUM, COUT):
     schematic = (
         half_adder(A, B, SUM_1, COUT_1),
         half_adder(CIN, SUM_1, SUM, COUT_2),
-        or_2_1(COUT_1, COUT_2, COUT)
+        or_2(COUT_1, COUT_2, COUT)
     )
 
     return schematic
@@ -104,7 +102,7 @@ def add_sub_8(A, B, CTL, SUM, COUT):
     bus = merge_8(*[CTL for _ in range(8)], CTL_BUS)
 
     schematic = (
-        xor_2_8(B, CTL_BUS, XOR_OUT),
+        xor_2(B, CTL_BUS, XOR_OUT),
         add_8(A, XOR_OUT, CTL, SUM, COUT)
     )
 
@@ -132,7 +130,7 @@ def alu(A, B, CTL, OUT, io=None):
 
     schematic = (
         add_sub_8(A, B, CTL(0), ADD_SUB, Signal(False)),
-        and_2_8(A, B, AND),
+        and_2(A, B, AND),
         mux_3_8(ADD_SUB, AND, B, CTL(3, 1), OUT)
     )
 

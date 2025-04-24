@@ -1,10 +1,9 @@
-from myhdl import block, Signal, SignalType, intbv, always_seq
 from components.ComputerParts import *
 from Utils import *
 
 
 @block
-def computer(PWR, init_ram=None, io=None):
+def computer(clr, clk, init_ram=None, io=None):
     """
     Top-level computer system integrating CPU, RAM, clock, and control logic
 
@@ -36,26 +35,16 @@ def computer(PWR, init_ram=None, io=None):
     DATA_IN = Signal(intbv(0)[16:])
     DATA_OUT = Signal(intbv(0)[16:])
     ADDR = Signal(intbv(0)[8:])
-    CLK = Signal(False)
-    CLR = Signal(False)
     RAM_EN = Signal(False)
     RAM_WR = Signal(False)
     ROM_EN = Signal(False)
     DUMP = Signal(False)  # For debugging
 
-
-
-    # Clock instance
-    clock = clock_driver(PWR, CLK)
-
-    # Clear instance
-    clear = clr_trigger(PWR, CLK, CLR)
-
     # CPU instance
     schematic = (cpu(
         DATA_IN=DATA_IN,
-        CLK=CLK,
-        CLR=CLR,
+        CLK=clk,
+        CLR=clr,
         DATA_OUT=DATA_OUT,
         ADDR=ADDR,
         RAM_EN=RAM_EN,
@@ -65,11 +54,11 @@ def computer(PWR, init_ram=None, io=None):
         ),
 
         ram_256x16_sim(
-        CLK=CLK,
+        CLK=clk,
         ADDR_IN=ADDR,
         DATA_IN=DATA_OUT,
         DATA_OUT=DATA_IN,
-        EN=PWR,
+        EN=Signal(True),
         WE=RAM_WR,
         DUMP=DUMP,
         init_data=init_ram
@@ -79,4 +68,4 @@ def computer(PWR, init_ram=None, io=None):
     if io is not None:
         io.capture(locals())
 
-    return schematic, clock, clear
+    return schematic

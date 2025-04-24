@@ -3,23 +3,32 @@ from Computer import computer  # assuming that's where computer() lives
 from Utils import *
 from LoadMem import *
 
+from SimpleCPUv1a_myhdl.Utils import clock_driver
+
+
 @block
 def ComputerTest():
     PWR = Signal(bool(0))
+    clr = Signal(False)
+    clk = Signal(False)
+
+    clock_process = clock_driver(clk)
 
     #Initialise Ram
     ram = get_mem(r"programs\code.dat")
 
     # Instantiate computer
     COMP_IO = IO_Capture()
-    comp_inst = computer(PWR, init_ram=mem, io=COMP_IO)
+    comp_inst = computer(clr, clk, init_ram=mem, io=COMP_IO)
 
     @instance
     def stimulus():
         print("\n--- Computer Test Start ---\n")
 
         PWR.next = 1
-        yield delay(100)
+        clr.next = 1
+        yield delay(100) #Delay to load RAM
+        clr.next = 0
 
         inst = 0
         while True:
@@ -43,7 +52,7 @@ def ComputerTest():
         print("--- Computer Test Done ---\n")
         raise StopSimulation()
 
-    return comp_inst, stimulus
+    return comp_inst, clock_process, stimulus
 
 def run_test(trace=False):
     tb = ComputerTest()

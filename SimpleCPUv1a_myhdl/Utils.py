@@ -1,4 +1,4 @@
-from myhdl import block, always, Signal, intbv, SignalType, concat, always_comb
+from myhdl import *
 
 
 class IO_Capture:
@@ -79,3 +79,20 @@ def merge_16(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Y):
     def logic():
         Y.next = concat(P, O, N, M, L, K, J, I, H, G, F, E, D, C, B, A)
     return logic
+
+@block
+def clock_driver(clk):
+    @always(delay(50))  # 50 ns high, 50 ns low → 100 ns full period
+    def toggle():
+            clk.next = not clk
+
+    return toggle
+
+@block
+def initaliser(reset):
+    @instance
+    def initialise():
+        reset.next = 1
+        yield delay(100)
+        reset.next = 0
+    return initialise

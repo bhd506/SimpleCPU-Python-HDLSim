@@ -1,4 +1,3 @@
-from myhdl import block
 from components.Gates import *
 from Utils import *
 
@@ -25,10 +24,10 @@ def mux_2_1(A, B, SEL, Y):
     AND_2 = Signal(False)
 
     schematic = (
-        not_1_1(SEL, notSEL),
-        and_2_1(A, notSEL, AND_1),
-        and_2_1(SEL, B, AND_2),
-        or_2_1(AND_1, AND_2, Y)
+        not_1(SEL, notSEL),
+        and_2(A, notSEL, AND_1),
+        and_2(SEL, B, AND_2),
+        or_2(AND_1, AND_2, Y)
     )
 
     return schematic

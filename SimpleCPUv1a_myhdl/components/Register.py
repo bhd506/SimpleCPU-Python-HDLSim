@@ -1,4 +1,3 @@
-from myhdl import *
 from components.Gates import *
 from components.FlipFlops import fdce
 from components.Mux import mux_2_8
@@ -113,12 +112,12 @@ def counter_8(CLK, CE, D, CLR, LD, Y):
     notLD = Signal(False)
     COUT = Signal(False)
 
-    _zero = Signal(intbv(0)[8:])
+    zero = Signal(intbv(0)[8:])
 
     schematic = (
         mux_2_8(Y, D, LD, MUX),
-        not_1_1(LD, notLD),
-        add_8(MUX, _zero, notLD, SUM, COUT),
+        not_1(LD, notLD),
+        add_8(MUX, zero, notLD, SUM, COUT),
         register_8(CLK, CE, SUM, CLR, Y)
     )
 

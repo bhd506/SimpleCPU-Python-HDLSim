@@ -1,72 +1,8 @@
-from myhdl import block, Signal, SignalType, intbv, instance, delay, always_seq, always, instances
-from components.Gates import *
 from components.Register import *
 from components.Mux import mux_2_8
 from components.ControlLogic import *
 from components.Math import alu
 from Utils import *
-
-@block
-def clock_driver(PWR, CLK):
-    """
-    Clock driver that generates a square wave when power is on.
-
-    Inputs:
-    - PWR: Signal(bool) — enables clock toggling when high
-
-    Outputs:
-    - CLK: Signal(bool) — toggles every 50ns (100ns full cycle)
-
-    Behavior:
-    - Simulates a basic clock oscillator.
-    - Runs continuously as long as PWR is high.
-    """
-    
-    @always(delay(50))  # 50 ns high, 50 ns low → 100 ns full period
-    def toggle():
-        if PWR:
-            CLK.next = not CLK
-
-    return toggle
-
-
-
-@block
-def clr_trigger(PWR, CLK, CLR):
-    """
-    One-shot asynchronous clear trigger
-
-    Inputs:
-    - PWR: Signal(bool) — trigger enable
-    - CLK: Signal(bool) — clock signal
-
-    Outputs:
-    - CLR: Signal(bool) — set high for one full clock cycle, then low
-
-    Behavior:
-    - Waits for power rising edge.
-    - Raises CLR for one clock cycle (posedge + negedge), then lowers it.
-    - Executes once and never runs again.
-    """
-    
-    @instance
-    def logic():
-        # Wait until power is on
-        yield PWR.posedge
-
-        CLR.next = 1
-
-        # Wait one full clock cycle (rising + falling)
-        yield CLK.posedge
-        yield CLK.negedge  # optional, if you want an exact full cycle
-
-        CLR.next = 0
-
-        # Done — never runs again
-
-    return logic
-
-
 
 @block
 def cpu(DATA_IN, CLK, CLR, DATA_OUT, ADDR, RAM_EN, RAM_WR, ROM_EN, io=None):
@@ -130,9 +66,9 @@ def cpu(DATA_IN, CLK, CLR, DATA_OUT, ADDR, RAM_EN, RAM_WR, ROM_EN, io=None):
         control_logic(CLK, CLR, IR(16,12), Z, IR_EN, ROM_EN, RAM_EN, RAM_WR,
                      ADDR_SEL, DATA_SEL, PC_EN, PC_LD, ACC_EN, ACC_CTL, apply(io)),
         nor_8(ACC, Z),
-        buf_1_4(IR(16,12), DATA_OUT_2),
-        buf_1_4(Signal(intbv(0)[4:]), DATA_OUT_1),
-        buf_1_8(ACC, DATA_OUT_0)
+        buf_1(IR(16,12), DATA_OUT_2),
+        buf_1(Signal(intbv(0)[4:]), DATA_OUT_1),
+        buf_1(ACC, DATA_OUT_0)
     )
 
     if io is not None:
@@ -170,22 +106,16 @@ def ram_256x16_sim(CLK, ADDR_IN, DATA_IN, DATA_OUT, EN, WE, DUMP, init_data=None
 
     # Optional preload of initial memory state
     if init_data is not None:
-        if isinstance(init_data, dict):
-            for addr, val in INIT_DATA.items():
-                mem[addr] = val
-        elif isinstance(init_data, list):
-            for i, val in enumerate(init_data):
-                if i < 256:
-                    mem[i] = val
+        for i, val in enumerate(init_data):
+            mem[i] = val
 
-    @always_seq(CLK.posedge, reset=None)
+    @always_seq(CLK.negedge, reset=None)
     def write_logic():
-        if EN and WE:
+        if ~EN & 1:
+            DATA_OUT.next = 0
+        elif WE:
             mem[int(ADDR_IN)] = int(DATA_IN)
-
-    @always(ADDR_IN, EN)
-    def read_logic():
-        if EN and not WE:
+        else:
             DATA_OUT.next = mem[int(ADDR_IN)]
 
     @always_comb
