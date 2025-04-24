@@ -1,41 +1,9 @@
-from myhdl import block, Signal, SignalType, intbv, always_seq
+from myhdl import *
 from components.Gates import *
 from components.FlipFlops import fdce
 from components.Mux import mux_2_8
 from components.Math import add_8
 from Utils import *
-
-@block
-def register_4(CLK, CE, D, CLR, Y):
-    """
-    4-bit register with clock enable and asynchronous clear
-
-    Inputs:
-    - CLK: Clock signal
-    - CE: Clock enable
-    - D: Bus(4) — 4-bit data input
-    - CLR: Asynchronous clear
-
-    Output:
-    - Q: Bus(4) — 4-bit data output
-
-    Behavior:
-    - Captures D on rising edge of CLK when CE is high
-    - Clears output when CLR is high
-    - Constructed from four FDCE flip-flops
-    """
-
-    Y_bits = [Signal(False) for _ in range(4)]
-    bus = merge_4(*Y_bits, Y)
-
-    schematic = (
-        fdce(CLK, CLR, CE, D(0), Y_bits[0]),
-        fdce(CLK, CLR, CE, D(1), Y_bits[1]),
-        fdce(CLK, CLR, CE, D(2), Y_bits[2]),
-        fdce(CLK, CLR, CE, D(3), Y_bits[3])
-    )
-
-    return schematic, bus
 
 @block
 def register_8(CLK, CE, D, CLR, Y):
@@ -57,12 +25,18 @@ def register_8(CLK, CE, D, CLR, Y):
     - Clears Q when CLR is high
     """
 
-    Y_parts = [Signal(intbv(0)[4:]) for _ in range(2)]
-    bus = merge(*Y_parts, Y)
+    Y_bits = [Signal(False) for _ in range(8)]
+    bus = merge_8(*Y_bits, Y)
 
     schematic = (
-        register_4(CLK, CE, D(4,0), CLR, Y_parts[0]),
-        register_4(CLK, CE, D(8,4), CLR, Y_parts[1])
+        fdce(CLK, CLR, CE, D(0), Y_bits[0]),
+        fdce(CLK, CLR, CE, D(1), Y_bits[1]),
+        fdce(CLK, CLR, CE, D(2), Y_bits[2]),
+        fdce(CLK, CLR, CE, D(3), Y_bits[3]),
+        fdce(CLK, CLR, CE, D(4), Y_bits[4]),
+        fdce(CLK, CLR, CE, D(5), Y_bits[5]),
+        fdce(CLK, CLR, CE, D(6), Y_bits[6]),
+        fdce(CLK, CLR, CE, D(7), Y_bits[7]),
     )
 
     return schematic, bus
@@ -87,12 +61,26 @@ def register_16(CLK, CE, D, CLR, Y):
     - Clears all bits when CLR is high
     """
 
-    Y_parts = [Signal(intbv(0)[8:]) for _ in range(2)]
-    bus = merge(*Y_parts, Y)
+    Y_bits = [Signal(False) for _ in range(16)]
+    bus = merge_16(*Y_bits, Y)
 
     schematic = (
-        register_8(CLK, CE, D(8,0), CLR, Y_parts[0]),
-        register_8(CLK, CE, D(16,8), CLR, Y_parts[1])
+        fdce(CLK, CLR, CE, D(0), Y_bits[0]),
+        fdce(CLK, CLR, CE, D(1), Y_bits[1]),
+        fdce(CLK, CLR, CE, D(2), Y_bits[2]),
+        fdce(CLK, CLR, CE, D(3), Y_bits[3]),
+        fdce(CLK, CLR, CE, D(4), Y_bits[4]),
+        fdce(CLK, CLR, CE, D(5), Y_bits[5]),
+        fdce(CLK, CLR, CE, D(6), Y_bits[6]),
+        fdce(CLK, CLR, CE, D(7), Y_bits[7]),
+        fdce(CLK, CLR, CE, D(8), Y_bits[8]),
+        fdce(CLK, CLR, CE, D(9), Y_bits[9]),
+        fdce(CLK, CLR, CE, D(10), Y_bits[10]),
+        fdce(CLK, CLR, CE, D(11), Y_bits[11]),
+        fdce(CLK, CLR, CE, D(12), Y_bits[12]),
+        fdce(CLK, CLR, CE, D(13), Y_bits[13]),
+        fdce(CLK, CLR, CE, D(14), Y_bits[14]),
+        fdce(CLK, CLR, CE, D(15), Y_bits[15]),
     )
 
     return schematic, bus
