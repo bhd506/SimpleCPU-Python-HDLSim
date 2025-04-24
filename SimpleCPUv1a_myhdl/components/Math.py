@@ -1,7 +1,8 @@
-from myhdl import block, Signal, concat, always
+from myhdl import *
 from components.Gates import *
 from components.Mux import *
 from Utils import *
+
 
 @block
 def half_adder(A, B, SUM, CARRY):
@@ -14,13 +15,14 @@ def half_adder(A, B, SUM, CARRY):
 
     Implements fundamental binary addition logic without a carry-in.
     """
-        
+
     schematic = (
         xor_2_1(A, B, SUM),
         and_2_1(A, B, CARRY)
     )
-    
+
     return schematic
+
 
 @block
 def full_adder(A, B, CIN, SUM, COUT):
@@ -34,11 +36,11 @@ def full_adder(A, B, CIN, SUM, COUT):
 
     Performs binary addition: SUM = A + B + CIN
     """
-    
+
     SUM_1 = Signal(False)
     COUT_1 = Signal(False)
     COUT_2 = Signal(False)
-    
+
     schematic = (
         half_adder(A, B, SUM_1, COUT_1),
         half_adder(CIN, SUM_1, SUM, COUT_2),
@@ -62,7 +64,7 @@ def add_8(A, B, CIN, SUM, COUT):
 
     SUM_bits = [Signal(False) for _ in range(8)]
     bus = merge_8(*SUM_bits, SUM)
-    
+
     COUTs = [Signal(False) for _ in range(7)]
 
     schematic = (
@@ -78,6 +80,7 @@ def add_8(A, B, CIN, SUM, COUT):
 
     return schematic, bus
 
+
 @block
 def add_sub_8(A, B, CTL, SUM, COUT):
     """
@@ -90,15 +93,15 @@ def add_sub_8(A, B, CTL, SUM, COUT):
     Implements:
     - ADD: SUM = A + B         if CTL == 0
     - SUB: SUM = A + (~B + 1)  if CTL == 1 (two's complement subtraction)
-    
-    Internally uses an 8-bit XOR gate to invert B based on CTL, 
+
+    Internally uses an 8-bit XOR gate to invert B based on CTL,
     and feeds the result into an 8-bit full adder along with A and CTL.
     """
-    
+
     XOR_OUT = Signal(intbv(0)[8:])
     CTL_BUS = Signal(intbv(0)[8:])
 
-    bus = merge_8(*[CTL_BUS for _ in range(8)], CTL_BUS)
+    bus = merge_8(*[CTL for _ in range(8)], CTL_BUS)
 
     schematic = (
         xor_2_8(B, CTL_BUS, XOR_OUT),
@@ -106,7 +109,6 @@ def add_sub_8(A, B, CTL, SUM, COUT):
     )
 
     return schematic, bus
-
 
 
 @block
@@ -124,14 +126,14 @@ def alu(A, B, CTL, OUT, io=None):
     - Uses and_2_8 for bitwise AND
     - Selects output with a 3-input 8-bit multiplexer (based on CTL[1:])
     """
-    
+
     ADD_SUB = Signal(intbv(0)[8:])
     AND = Signal(intbv(0)[8:])
 
     schematic = (
         add_sub_8(A, B, CTL(0), ADD_SUB, Signal(False)),
         and_2_8(A, B, AND),
-        mux_3_8(ADD_SUB, AND, B, CTL(3,1), OUT)
+        mux_3_8(ADD_SUB, AND, B, CTL(3, 1), OUT)
     )
 
     if io is not None:
