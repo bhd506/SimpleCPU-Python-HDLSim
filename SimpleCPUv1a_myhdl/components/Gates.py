@@ -1,4 +1,4 @@
-from myhdl import block, always_comb
+from myhdl import *
 
 # -------------------------------------------------------------------------
 # 2-input Logic Gates (Works for both 1-bit and n-bit)

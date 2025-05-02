@@ -40,16 +40,16 @@ def test_SR():
 
 @block
 def test_FDP():
-    CLK = Signal(bool(0))
+    clk = Signal(bool(0))
     D = Signal(bool(0))
     PRE = Signal(bool(0))
     Q = Signal(bool(0))
 
-    fdp_inst = FDP(CLK, D, PRE, Q)
+    fdp_inst = FDP(clk, D, PRE, Q)
 
     @always(delay(5))
     def clk_gen():
-        CLK.next = not CLK
+        clk.next = not clk
 
     @instance
     def stimulus():
@@ -79,24 +79,24 @@ def test_FDP():
 
 @block
 def test_FDC():
-    CLK = Signal(bool(0))
+    clk = Signal(bool(0))
     D = Signal(bool(0))
-    CLR = Signal(bool(0))
+    rst = Signal(bool(0))
     Q = Signal(bool(0))
 
-    fdc_inst = FDC(CLK, D, CLR, Q)
+    fdc_inst = FDC(clk, D, rst, Q)
 
     @always(delay(5))
     def clk_gen():
-        CLK.next = not CLK
+        clk.next = not clk
 
     @instance
     def stimulus():
         print("\n--- Testing FDC ---")
 
-        CLR.next = 1
+        rst.next = 1
         yield delay(5)
-        CLR.next = 0
+        rst.next = 0
         yield delay(5)
         assert Q == 0
 
@@ -108,7 +108,7 @@ def test_FDC():
         yield delay(10)
         assert Q == 0
 
-        CLR.next = 1
+        rst.next = 1
         yield delay(5)
         assert Q == 0
 
@@ -120,40 +120,40 @@ def test_FDC():
 
 @block
 def test_FDCE():
-    CLK = Signal(bool(0))
+    clk = Signal(bool(0))
     CE = Signal(bool(1))
     D = Signal(bool(0))
-    CLR = Signal(bool(0))
+    rst = Signal(bool(0))
     Q = Signal(intbv(0)[1:])
 
-    fdce_inst = FDCE(CLK, CE, D, CLR, Q)
+    fdce_inst = FDCE(clk, CE, D, rst, Q)
 
     @always(delay(5))
     def clk_gen():
-        CLK.next = not CLK
+        clk.next = not clk
 
-    def print_case(d, ce, clr, expected):
-        print(f"D={d}, CE={ce}, CLR={clr} → Q={int(Q)} (expected {expected})")
-        assert int(Q) == expected, f"FAILED: D={d}, CE={ce}, CLR={clr}, Q={int(Q)}, expected {expected}"
+    def print_case(d, ce, rst, expected):
+        print(f"D={d}, CE={ce}, rst={rst} → Q={int(Q)} (expected {expected})")
+        assert int(Q) == expected, f"FAILED: D={d}, CE={ce}, rst={rst}, Q={int(Q)}, expected {expected}"
 
     @instance
     def stimulus():
         print("\n--- Testing FDCE ---")
 
         test_vectors = [
-            (0, 1, 1, 0),  # CLR active
+            (0, 1, 1, 0),  # rst active
             (1, 1, 0, 1),  # Write 1
             (0, 1, 0, 0),  # Write 0
             (1, 0, 0, 0),  # CE=0, hold
-            (1, 0, 1, 0),  # CLR during hold
+            (1, 0, 1, 0),  # rst during hold
         ]
 
-        for d_val, ce_val, clr_val, expected in test_vectors:
+        for d_val, ce_val, rst_val, expected in test_vectors:
             D.next = d_val
             CE.next = ce_val
-            CLR.next = clr_val
+            rst.next = rst_val
             yield delay(10)
-            print_case(d_val, ce_val, clr_val, expected)
+            print_case(d_val, ce_val, rst_val, expected)
 
         print("\nFDCE test completed successfully.")
         raise StopSimulation()
@@ -163,27 +163,27 @@ def test_FDCE():
 
 @block
 def test_RC():
-    CLK = Signal(False)
-    CLR = Signal(False)
+    clk = Signal(False)
+    rst = Signal(False)
     Q = Bus(3)
 
-    ring_counter_inst = RingCounter(CLK, CLR, Q)
+    ring_counter_inst = RingCounter(clk, rst, Q)
 
     @always(delay(5))
     def clkgen():
-        CLK.next = not CLK
+        clk.next = not clk
 
     @instance
     def stimulus():
-        print("Time     CLR Q")
+        print("Time     rst Q")
         print("================")
 
-        CLR.next = 1
+        rst.next = 1
         yield delay(5)
-        CLR.next = 0
+        rst.next = 0
 
         for i in range(10):
-            print(f"{now():<9} {int(CLR)}   {bin(Q.get_val(), 3)}")
+            print(f"{now():<9} {int(rst)}   {bin(Q.get_val(), 3)}")
             yield delay(10)
 
         raise StopSimulation()

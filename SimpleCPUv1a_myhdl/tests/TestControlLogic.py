@@ -8,8 +8,8 @@ from myhdl import *
 
 @block
 def ControlLogicTest():
-    CLK = Signal(bool(0))
-    CLR = Signal(bool(0))
+    clk = Signal(bool(0))
+    rst = Signal(bool(0))
     Z = Signal(bool(0))
 
     Y = Bus(16)
@@ -26,23 +26,23 @@ def ControlLogicTest():
     ACC_EN = Signal(bool(0))
     ACC_CTL = Bus(3)
 
-    dut = ControlLogic(CLK, CLR, D, Z,
+    dut = ControlLogic(clk, rst, D, Z,
                        IR_EN, ROM_EN, RAM_EN, RAM_WR,
                        ADDR_SEL, DATA_SEL, PC_EN, PC_LD,
                        ACC_EN, ACC_CTL, Y)
 
     @always(delay(5))
     def clk_gen():
-        CLK.next = not CLK
+        clk.next = not clk
 
     @instance
     def stimulus():
         print("\n--- Control Logic Test Start ---\n")
 
         # Reset first
-        CLR.next = 1
+        rst.next = 1
         yield delay(10)
-        CLR.next = 0
+        rst.next = 0
 
         # Try every possible opcode (0x0 to 0xF)
         for opcode in range(16):

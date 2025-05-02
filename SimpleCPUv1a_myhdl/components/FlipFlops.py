@@ -1,14 +1,20 @@
 from Utils import *
 
 @block
-def fdce(C, CLR, CE, D, Q):
-    """ Synthesizable FDCE flip-flop.
-        CLR: Asynchronous clear (active-high for Xilinx)
-        ce:  Clock enable
+def fdce(clk, rst, CE, D, Q):
     """
-    @always(C.posedge, CLR.posedge)  # Trigger on C OR CLR (async clear)
+    FDCE with asynchronous clear
+
+    Inputs:
+    - C: Clock input
+    - rst: Asynchronous clear
+    - Q: 3-bit data output
+
+    Circular shift register with one-hot state encoding. Only one output is high at a time.
+    """
+    @always(clk.posedge, rst.posedge)
     def logic():
-        if CLR == 1:  # Active-high clear (Xilinx style)
+        if rst == 1:  # Active-high clear (Xilinx style)
             Q.next = 0
         else:
             if CE == 1:  # Clock enable
@@ -20,24 +26,22 @@ def fdce(C, CLR, CE, D, Q):
 
 
 @block
-def ring_counter(CLK, CLR, Q):
+def ring_counter(clk, rst, Q):
     """
-    3-bit ring counter using flip-flops
+    3-bit ring counter with asynchronous clear
 
     Inputs:
     - C: Clock input
-    - CLR: Asynchronous clear
-
-    Output:
-    - Q: 3-bit Bus representing counter state
+    - rst: Asynchronous clear
+    - Q: 3-bit data output
 
     Circular shift register with one-hot state encoding. Only one output is high at a time.
     """
 
 
-    @always(CLK.posedge, CLR.posedge)  # Trigger on C OR CLR (async clear)
+    @always(clk.posedge, rst.posedge)  # Trigger on C OR rst (async clear)
     def logic():
-        if CLR == 1:  # Active-high clear (Xilinx style)
+        if rst == 1:  # Active-high clear (Xilinx style)
             Q.next = 1
         else:
             Q.next = ((Q << 1) & 0b111) | (Q[2])

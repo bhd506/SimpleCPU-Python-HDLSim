@@ -49,7 +49,7 @@ def full_adder(A, B, CIN, SUM, COUT):
 
 
 @block
-def add_8(A, B, CIN, SUM, COUT):
+def add_8(A, B, CIN, SUM):
     """
     8-bit ripple-carry adder using 1-bit full adder blocks
 
@@ -73,14 +73,14 @@ def add_8(A, B, CIN, SUM, COUT):
         full_adder(A(4), B(4), COUTs[3], SUM_bits[4], COUTs[4]),
         full_adder(A(5), B(5), COUTs[4], SUM_bits[5], COUTs[5]),
         full_adder(A(6), B(6), COUTs[5], SUM_bits[6], COUTs[6]),
-        full_adder(A(7), B(7), COUTs[6], SUM_bits[7], COUT),
+        full_adder(A(7), B(7), COUTs[6], SUM_bits[7], Signal(False)),
     )
 
     return schematic, bus
 
 
 @block
-def add_sub_8(A, B, CTL, SUM, COUT):
+def add_sub_8(A, B, CTL, SUM):
     """
     8-bit adder/subtractor using two's complement and a shared adder
 
@@ -103,14 +103,14 @@ def add_sub_8(A, B, CTL, SUM, COUT):
 
     schematic = (
         xor_2(B, CTL_BUS, XOR_OUT),
-        add_8(A, XOR_OUT, CTL, SUM, COUT)
+        add_8(A, XOR_OUT, CTL, SUM)
     )
 
     return schematic, bus
 
 
 @block
-def alu(A, B, CTL, OUT, io=None):
+def alu(A, B, CTL, OUT):
     """
     8-bit Arithmetic Logic Unit (ALU) supporting ADD, SUB, AND, and PASS B operations
 
@@ -129,13 +129,10 @@ def alu(A, B, CTL, OUT, io=None):
     AND = Signal(intbv(0)[8:])
 
     schematic = (
-        add_sub_8(A, B, CTL(0), ADD_SUB, Signal(False)),
+        add_sub_8(A, B, CTL(0), ADD_SUB),
         and_2(A, B, AND),
         mux_3_8(ADD_SUB, AND, B, CTL(3, 1), OUT)
     )
-
-    if io is not None:
-        io.capture(locals())
 
     return schematic
 

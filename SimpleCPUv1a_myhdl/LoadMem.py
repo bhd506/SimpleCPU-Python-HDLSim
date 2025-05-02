@@ -15,7 +15,7 @@ INSTRUCTION_MAP_INV = {
 def get_mem(file_path):
     with open(file_path, 'r') as f:
         lines = f.readlines()
-    mem = [0 for i in range(256)]
+    mem = [0 for _ in range(256)]
     for addr, line in enumerate(lines):
         mem[addr] = int(line.strip().split()[1], 2)
     return mem
