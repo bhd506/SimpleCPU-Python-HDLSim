@@ -1,4 +1,4 @@
-from Cpu import *
+from SimpleCPU import *
 from Memory import *
 from Utils import *
 

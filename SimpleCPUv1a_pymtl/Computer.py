@@ -1,5 +1,5 @@
 from pymtl3 import *
-from SimpleRAM import SimpleRAM
+from Memory import SimpleRAM
 from SimpleCPU import SimpleCPU
 
 class Computer(Component):

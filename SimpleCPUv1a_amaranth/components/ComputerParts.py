@@ -71,7 +71,6 @@ class RAM256x16(Elaboratable):
         self.DATA_IN  = Signal(16, reset_less = True)  # Data to write
         self.EN       = Signal(reset_less = True)   # Memory enable
         self.WE       = Signal(reset_less = True)   # Write enable
-        self.DUMP     = Signal()   # Dump trigger (simulation)
 
         # Output
         self.DATA_OUT = Signal(16)  # Read data
@@ -99,29 +98,14 @@ class RAM256x16(Elaboratable):
 
         # Write on rising edge of system clock
         with m.If(self.EN & self.WE):
-            m.d.sync += [
+            m.d.neg += [
                 wp.addr.eq(self.ADDR_IN),
                 wp.data.eq(self.DATA_IN),
                 wp.en.eq(1)
             ]
             
         with m.Else():
-            m.d.sync += wp.en.eq(0)
+            m.d.neg += wp.en.eq(0)
 
         return m
-
-    def simulate_dump_logic(self, sim):
-        """Simulation-only: call this to print memory when DUMP is high."""
-        def process():
-            yield Passive()
-            while True:
-                if (yield self.DUMP):
-                    print("\n--- RAM DUMP ---")
-                    for i in range(256):
-                        val = yield self.mem._array[i]
-                        if val != 0:
-                            print(f"Addr {i:03}: {val:016b} ({val:04X})")
-                    print("----------------\n")
-                yield
-        sim.add_process(process)
 
