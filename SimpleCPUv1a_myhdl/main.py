@@ -1,3 +1,3 @@
-from tests.TestComputer import run_test
+from tests.TestRegister16 import run_test
 
 run_test()
