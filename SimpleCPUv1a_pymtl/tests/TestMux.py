@@ -1,4 +1,3 @@
-from pymtl3 import *
 from components.Mux import *
 
 # Test function for the mux components

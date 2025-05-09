@@ -61,6 +61,7 @@ class FullAdder8bit(wiring.Component):
     
     def __init__(self):
         # 8-bit inputs
+        super().__init__()
         self.A = Signal(8)
         self.B = Signal(8)
         self.Cin = Signal()

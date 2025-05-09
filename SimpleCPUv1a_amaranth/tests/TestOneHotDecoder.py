@@ -1,8 +1,5 @@
 from amaranth import *
-from amaranth.lib import wiring
-from amaranth.lib.wiring import In, Out
-from amaranth.lib.cdc import ResetInserter, ResetSignal
-from amaranth.sim import Simulator, Delay
+from amaranth.sim import Simulator
 
 from components.OneHotDecoder import OneHotDecoder
 
@@ -64,12 +61,15 @@ async def bench(ctx):
 
     
 
-def run_tests():
+def run_tests(trace=False):
     global dut
     
     dut = TopModule()
     sim = Simulator(dut)
     sim.add_clock(1e-7)
     sim.add_testbench(bench)
-    with sim.write_vcd("Counter8bit.vcd"):
+    if trace:
+        with sim.write_vcd("Counter8bit.vcd"):
+            sim.run()
+    else:
         sim.run()

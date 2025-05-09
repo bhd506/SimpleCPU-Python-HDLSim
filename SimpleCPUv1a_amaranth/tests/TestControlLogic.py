@@ -1,5 +1,5 @@
 from amaranth import *
-from amaranth.sim import Simulator, Delay, Settle
+from amaranth.sim import Simulator
 
 from components.ControlLogic import ControlLogic  # Update this with actual import
 
@@ -84,13 +84,16 @@ async def bench(ctx):
         print("-----")
 
 
-def run_tests():
+def run_tests(trace=False):
     global dut
     dut = TopModule()
     sim = Simulator(dut)
     sim.add_clock(1e-6)
     sim.add_testbench(bench)
-    with sim.write_vcd("control_logic.vcd"):
+    if trace:
+        with sim.write_vcd("control_logic.vcd"):
+            sim.run()
+    else:
         sim.run()
 
 

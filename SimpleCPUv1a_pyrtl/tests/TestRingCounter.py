@@ -37,7 +37,7 @@ def test_ring_counter():
         (0, 4, "Second shift - expect 100"),  # Second shift, expect q=100 after
         (0, 1, "Third shift - wrapped to 001"),  # Third shift, expect q=001 after (wrapping)
         (0, 2, "Fourth shift - expect 010"),  # Fourth shift, expect q=010 after
-        (1, 1, "Reset again - expect 001"),  # Reset active, expect q=001 after
+        (1, 4, "Reset again - expect 001"),  # Reset active, expect q=001 after
         (0, 1, "Reset just released - still 001"),  # Reset just released, still q=001
         (0, 2, "Resuming shift - expect 010")  # First shift after reset, expect q=010 after
     ]

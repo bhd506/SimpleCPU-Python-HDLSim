@@ -1,5 +1,6 @@
 from pymtl3 import *
-from components.FlipFlops import *
+
+from components.FlipFlops import FDCE
 from components.Math import FullAdder8bit
 from components.Mux import Mux2_8
 

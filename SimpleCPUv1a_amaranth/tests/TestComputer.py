@@ -1,8 +1,20 @@
-from amaranth import *
-from amaranth.sim import Simulator, Delay, Settle
+from amaranth.sim import Simulator
 
-from components.Computer import Computer  # Update this with actual import
+from Computer import *  # Update this with actual import
 
+INSTRUCTION_MAP_INV = {
+    0x0: 'move',
+    0x1: 'add',
+    0x2: 'sub',
+    0x3: 'and',
+    0x4: 'load',
+    0x5: 'store',
+    0x6: 'addm',
+    0x7: 'subm',
+    0x8: 'jumpu',
+    0x9: 'jumpz',
+    0xA: 'jumpnz',
+}
 
 class TopModule(Elaboratable):
     def __init__(self, init_data = None):
@@ -10,8 +22,6 @@ class TopModule(Elaboratable):
         self.CLR = Signal()
         self.DATA_OUT = Signal(16)
         self.DATA_IN = Signal(16)
-        self.IR = Signal(16)
-        self.ADDR = Signal(8)
 
         self.init_data = init_data
 
@@ -31,12 +41,54 @@ class TopModule(Elaboratable):
         m.d.comb += [
             self.DATA_OUT.eq(computer.DATA_OUT),
             self.DATA_IN.eq(computer.DATA_IN),
-            self.IR.eq(computer.IR),
-            self.ADDR.eq(computer.ADDR)
         ]
 
         return m
 
+
+def parse_inst(op_code):
+    try:
+        return INSTRUCTION_MAP_INV[op_code]
+    except:
+        print(op_code)
+        raise KeyError
+
+
+
+def load_dat_file(filename):
+    """
+    Load a .dat file into memory.
+
+    The .dat file format is:
+    <address> <binary_data>
+
+    Example:
+    0000 0000000000000001
+    0001 0000000000000011
+    ...
+
+    Returns:
+    - A list of 16-bit values representing memory contents
+    """
+    mem = [0 for _ in range(256)]  # Initialize memory with 256 words of 0
+
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    parts = line.split()
+                    if len(parts) == 2:
+                        addr = int(parts[0], 10)  # Parse address as decimal
+                        data = int(parts[1], 2)  # Parse data as binary
+                        mem[addr] = data
+
+
+        print(f"Memory loaded from {filename}: {len([x for x in mem if x != 0])} non-zero words")
+    except FileNotFoundError:
+        print(f"Warning: File {filename} not found. Using default memory.")
+
+    return mem
 
 async def bench(ctx):
     # Reset and initialize
@@ -50,8 +102,6 @@ async def bench(ctx):
     while True:
         DATA_IN = ctx.get(dut.DATA_IN)
         DATA_OUT = ctx.get(dut.DATA_OUT)
-        IR = ctx.get(dut.IR)
-        ADDR = ctx.get(dut.ADDR)
 
         if int(DATA_IN) == 0xffff:
             print("")
@@ -63,10 +113,8 @@ async def bench(ctx):
         else:
             instruction = DATA_IN//4096
             print("")
-            print(f"Inst:  0x{int(DATA_IN):04X}")
-            print(f"IR:  0x{int(IR):04X}")
+            print(f"Inst:  {parse_inst(int(DATA_IN)//2**12)}")
             print(f"ACC:   0x{int(DATA_OUT)%256:02X}")
-            print(f"ADDR:   0x{int(ADDR)%256:02X}")
             print("")
 
         await ctx.tick()
@@ -76,23 +124,19 @@ async def bench(ctx):
 
 
 
-def run_tests():
+def run_tests(trace=False, program_path="programs/code.dat"):
     global dut
 
-    mem = [0 for i in range(256)]
-    mem[0] = 0x0004
-    mem[1] = 0x50ff
-    mem[2] = 0x000f
-    mem[3] = 0x0001
-    mem[4] = 0x60ff
-    mem[5] = 0x1001
-    mem[6] = 0xffff
+    mem = load_dat_file(program_path)
     
     dut = TopModule(mem)
     sim = Simulator(dut)
     sim.add_clock(1e-6)
     sim.add_testbench(bench)
-    with sim.write_vcd("Computer.vcd"):
+    if trace:
+        with sim.write_vcd("Computer.vcd"):
+            sim.run()
+    else:
         sim.run()
 
 

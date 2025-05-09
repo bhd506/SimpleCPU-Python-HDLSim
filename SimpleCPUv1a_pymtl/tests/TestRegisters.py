@@ -1,4 +1,3 @@
-from pymtl3 import *
 from components.Registers import *
 
 # Test function for the ALU

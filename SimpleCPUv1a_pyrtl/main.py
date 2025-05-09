@@ -1,3 +1,3 @@
-from tests.TestSimpleCPU import run_test
+from tests.TestRingCounter import run_test
 
 run_test()

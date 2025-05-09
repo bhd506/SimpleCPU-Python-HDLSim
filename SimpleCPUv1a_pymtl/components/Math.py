@@ -1,7 +1,5 @@
 from pymtl3 import *
 
-from components.Mux import Mux2_8
-
 # HalfAdder component
 class HalfAdder(Component):
     def construct(s):

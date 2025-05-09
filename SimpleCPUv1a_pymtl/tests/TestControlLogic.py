@@ -1,4 +1,3 @@
-from components.ControlLogic import *
 from pymtl3 import *
 
 def test_control_logic():

@@ -1,20 +1,14 @@
-import sys
-import os
-
-# Add parent directory to path to allow importing components
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 import pyrtl
-from components.FlipFlops import fdce
+import sys
+from components.Register import register
 
-
-def test_fdce():
+def test_register16():
     """
-    Test bench for the FDCE (D Flip-Flop with Clock Enable and Asynchronous Clear).
+    Test bench for the 16-bit Register component.
 
     Tests all operation modes:
-    - Asynchronous reset
-    - Clock enable functionality
+    - Asynchronous reset (sets register to 0)
+    - Clock enable functionality (only updates when enabled)
     - Normal data capture on clock edge
     """
     # Reset PyRTL working block for a clean environment
@@ -23,38 +17,37 @@ def test_fdce():
     # Create input and output wires
     rst = pyrtl.Input(1, 'rst')
     ce = pyrtl.Input(1, 'ce')
-    d = pyrtl.Input(1, 'd')
-    q = pyrtl.Output(1, 'q')
+    d = pyrtl.Input(16, 'd')
+    q = pyrtl.Output(16, 'q')
 
-    # Instantiate the FDCE
-    fdce(rst, ce, d, q)
+    # Instantiate the 16-bit register
+    register(rst, ce, d, q, 16)
 
     # Create a simulation trace and simulator
     sim_trace = pyrtl.SimulationTrace()
     sim = pyrtl.Simulation(tracer=sim_trace)
 
-    # Define test vectors
+    # Define test vectors with 16-bit values
     # Format: (rst_val, ce_val, d_val, expected_q_next_cycle, description)
-    # The expected value is what q should be AFTER this cycle (visible in the next cycle)
     test_vectors = [
-        (1, 0, 0, 0, "Initial reset active"),  # Reset active, expect q=0 after
-        (1, 1, 1, 0, "Reset overrides CE=1 and D=1"),  # Reset active, expect q=0 after
-        (0, 1, 1, 1, "Release reset, CE=1, D=1"),  # Reset off, CE on, D=1, expect q=1 after
-        (0, 1, 0, 0, "CE=1, D=0"),  # CE on, D=0, expect q=0 after
-        (0, 0, 1, 0, "CE=0, D=1 ignored"),  # CE off, D=1, expect q remains 0 after
-        (0, 0, 0, 0, "CE=0, D=0 ignored"),  # CE off, D=0, expect q remains 0 after
-        (0, 1, 1, 1, "CE=1, D=1"),  # CE on, D=1, expect q=1 after
-        (1, 1, 1, 0, "Reset active overrides others"),  # Reset on, expect q=0 after
-        (0, 1, 1, 1, "Reset released, CE=1, D=1")  # Reset off, CE on, D=1, expect q=1 after
+        (1, 0, 0x0000, 0x0000, "Initial reset active"),
+        (1, 1, 0xFFFF, 0x0000, "Reset overrides CE=1 and D=0xFFFF"),
+        (0, 1, 0xABCD, 0x0000, "Release reset, CE=1, load 0xABCD"),
+        (0, 1, 0x1234, 0xABCD, "CE=1, load 0x1234"),
+        (0, 0, 0x5678, 0x1234, "CE=0, D=0x5678 ignored (q remains 0x1234)"),
+        (0, 0, 0x9ABC, 0x1234, "CE=0, D=0x9ABC ignored (q remains 0x1234)"),
+        (0, 1, 0xDEF0, 0x1234, "CE=1, load 0xDEF0"),
+        (1, 1, 0x0123, 0xDEF0, "Reset active overrides others"),
+        (0, 1, 0x4567, 0x0000, "Reset released, CE=1, load 0x4567")
     ]
 
     # Print test header
-    print("\n--- FDCE Test ---\n")
-    print("Cycle RST CE D | Q | Expected | Result | Description")
-    print("--------------------------------------------------")
+    print("\n--- Register16 Test ---\n")
+    print("Cycle  RST  CE   D (hex)  |  Q (hex)  | Expected Q | Result | Description")
+    print("---------------------------------------------------------------------")
 
     # Initialize with reset
-    sim.step({'rst': 1, 'ce': 0, 'd': 0})
+    sim.step({'rst': 1, 'ce': 0, 'd': 0x0000})
 
     all_tests_passed = True
 
@@ -63,30 +56,27 @@ def test_fdce():
         # Get current Q value (result of previous cycle's inputs)
         current_q = sim.inspect(q)
 
-        # For verification, compare current Q with expected value from previous cycle
-        # Skip checking for cycle 0 since there's no previous expectation
+        # Compare current Q with expected value from previous cycle (skip for first cycle)
         if cycle > 0:
-            expected_current_q = test_vectors[cycle - 1][3]  # Expected from previous cycle
+            expected_current_q = test_vectors[cycle - 1][3]
             result = "PASS" if current_q == expected_current_q else "FAIL"
             if result == "FAIL":
                 all_tests_passed = False
         else:
-            # For first cycle, we're just coming out of initialization
-            expected_current_q = 0  # Expected to be 0 after initial reset
+            expected_current_q = 0x0000  # Expected to be 0 after initial reset
             result = "PASS" if current_q == expected_current_q else "FAIL"
             if result == "FAIL":
                 all_tests_passed = False
 
+        # Apply next test vector
         sim.step({'rst': rst_val, 'ce': ce_val, 'd': d_val})
 
         # Print current state and result
-        print(f"{cycle:4d}   {sim_trace.trace['rst'][cycle] if cycle > 0 else 1}   " +
-              f"{sim_trace.trace['ce'][cycle] if cycle > 0 else 0}  " +
-              f"{sim_trace.trace['d'][cycle] if cycle > 0 else 0} | " +
-              f"{current_q} |    {expected_current_q}    | {result} | " +
+        print(f"{cycle:4d}    {sim_trace.trace['rst'][cycle] if cycle > 0 else 1}    "
+              f"{sim_trace.trace['ce'][cycle] if cycle > 0 else 0}    "
+              f"0x{sim_trace.trace['d'][cycle] if cycle > 0 else 0:04X}   |  "
+              f"0x{current_q:04X}   |   0x{expected_current_q:04X}   | {result} | "
               f"{test_vectors[cycle - 1][4] if cycle > 0 else 'Initial state after reset'}")
-
-
 
     # Check the final state (after all test vectors)
     final_cycle = len(test_vectors)
@@ -97,15 +87,11 @@ def test_fdce():
         all_tests_passed = False
 
     # Print the final state
-    print(f"{final_cycle:4d}   {sim_trace.trace['rst'][final_cycle]}   " +
-          f"{sim_trace.trace['ce'][final_cycle]}  " +
-          f"{sim_trace.trace['d'][final_cycle]} | " +
-          f"{final_q} |    {expected_final_q}    | {final_result} | " +
+    print(f"{final_cycle:4d}    {sim_trace.trace['rst'][final_cycle]}    "
+          f"{sim_trace.trace['ce'][final_cycle]}    "
+          f"0x{sim_trace.trace['d'][final_cycle]:04X}   |  "
+          f"0x{final_q:04X}   |   0x{expected_final_q:04X}   | {final_result} | "
           f"{test_vectors[-1][4]}")
-
-    # Print the simulation trace
-    print("\nWaveform:")
-    print(sim_trace.render_trace())
 
     # Print overall test result
     print(f"\nOverall Test Result: {'PASS' if all_tests_passed else 'FAIL'}")
@@ -114,18 +100,18 @@ def test_fdce():
 
 
 def run_test(trace=False):
-    """Run the FDCE test with optional VCD trace file generation."""
-    print("\n=== FDCE Test Start ===\n")
+    """Run the Register16 test with optional VCD trace file generation."""
+    print("\n=== Register16 Test Start ===\n")
 
-    sim_trace, passed = test_fdce()
+    sim_trace, passed = test_register16()
 
     if trace:
         # Create a VCD file for waveform viewing in external tools
-        with open('fdce_test.vcd', 'w') as f:
+        with open('register16_test.vcd', 'w') as f:
             sim_trace.print_vcd(f)
-        print("\nVCD file 'fdce_test.vcd' generated for waveform viewing.")
+        print("\nVCD file 'register16_test.vcd' generated for waveform viewing.")
 
-    print(f"\n=== FDCE Test {'Passed' if passed else 'Failed'} ===\n")
+    print(f"\n=== Register16 Test {'Passed' if passed else 'Failed'} ===\n")
     return passed
 
 

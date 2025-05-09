@@ -1,48 +1,73 @@
-from turtledemo import clock
+from myhdl import *
+from Computer import computer
+from Utils import clock_driver
 
-from Computer import computer  # assuming that's where computer() lives
-from Utils import *
-from LoadMem import *
+INSTRUCTION_MAP_INV = {
+    0x0: 'move',
+    0x1: 'add',
+    0x2: 'sub',
+    0x3: 'and',
+    0x4: 'load',
+    0x5: 'store',
+    0x6: 'addm',
+    0x7: 'subm',
+    0x8: 'jumpu',
+    0x9: 'jumpz',
+    0xA: 'jumpnz',
+}
 
-from SimpleCPUv1a_myhdl.Utils import clock_driver
+def parse_inst(op_code):
+    try:
+        return INSTRUCTION_MAP_INV[op_code]
+    except:
+        print(op_code)
+        raise KeyError
 
 
 @block
-def ComputerTest():
+def ComputerTest(program_path):
+    # Create signals
     rst = Signal(False)
     clk = Signal(False)
-
     DATA_IN = Signal(intbv(0)[16:])
     DATA_OUT = Signal(intbv(0)[16:])
 
-    #Initialise Ram
-    ram = get_mem(r"programs\code.dat")
-    comp_inst = computer(rst, clk, DATA_IN, DATA_OUT, init_ram=mem)
+    # Load memory from .dat file
+    ram = load_dat_file(program_path)
+
+    # Instantiate computer with loaded RAM
+    comp_inst = computer(rst, clk, DATA_IN, DATA_OUT, init_ram=ram)
 
     @instance
     def stimulus():
         print("\n--- Computer Test Start ---\n")
 
+        # Reset the computer
         rst.next = True
         yield delay(100)
         rst.next = False
 
+        # Run the program until it reaches the termination instruction (0xFFFF)
         inst = 0
         while True:
             inst += 1
-            if int(DATA_IN) == 0xffff:
+
+            # Check for termination instruction
+            if int(DATA_IN) == 0xFFFF:
                 print("")
                 print("Inst:  end")
-                print(f"ACC:   0x{int(DATA_OUT)%256:02X}")
+                print(f"ACC:   0x{int(DATA_OUT) % 256:02X}")
                 print("")
                 break
-
             else:
-                instruction = parse_inst(int(DATA_IN)//4096)
+                # Parse and display the current instruction
+                instruction = parse_inst(int(DATA_IN) // 4096)
                 print("")
-                print(f"ACC:   0x{int(DATA_OUT)%256:02X}")
+                print(f"Inst:  {instruction}")
+                print(f"ACC:   0x{int(DATA_OUT) % 256:02X}")
                 print("")
 
+            # Wait for next instruction
             yield delay(300)
 
         print("--- Computer Test Done ---\n")
@@ -50,22 +75,48 @@ def ComputerTest():
 
     return comp_inst, clock_driver(clk), stimulus
 
-def run_test(trace=False):
-    tb = ComputerTest()
-    tb.config_sim(trace)
+
+def load_dat_file(filename):
+    """
+    Load a .dat file into memory.
+
+    The .dat file format is:
+    <address> <binary_data>
+
+    Example:
+    0000 0000000000000001
+    0001 0000000000000011
+    ...
+
+    Returns:
+    - A list of 16-bit values representing memory contents
+    """
+    mem = [0 for _ in range(256)]  # Initialize memory with 256 words of 0
+
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    parts = line.split()
+                    if len(parts) == 2:
+                        addr = int(parts[0], 10)  # Parse address as decimal
+                        data = int(parts[1], 2)  # Parse data as binary
+                        mem[addr] = data
+
+
+        print(f"Memory loaded from {filename}: {len([x for x in mem if x != 0])} non-zero words")
+    except FileNotFoundError:
+        print(f"Warning: File {filename} not found. Using default memory.")
+
+    return mem
+
+
+def run_test(trace=False, program_path = "programs/code.dat"):
+    tb = ComputerTest(program_path)
+    tb.config_sim(trace=trace)
     tb.run_sim()
 
 
-
-mem = [0 for i in range(256)]
-
-mem[0] = 0x0004
-mem[1] = 0x50ff
-mem[2] = 0x000f
-mem[3] = 0x0001
-mem[4] = 0x60ff
-mem[5] = 0x1001
-mem[6] = 0x2002
-mem[7] = 0x70ff
-mem[8] = 0x201f
-mem[9] = 0xffff
+if __name__ == '__main__':
+    run_test()

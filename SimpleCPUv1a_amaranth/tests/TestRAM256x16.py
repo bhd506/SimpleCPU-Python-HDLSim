@@ -1,6 +1,5 @@
 from amaranth import *
-from amaranth.sim import Simulator, Delay, Settle
-
+from amaranth.sim import Simulator
 from components.ComputerParts import RAM256x16  # Update this with actual import
 
 
@@ -71,7 +70,7 @@ async def bench(ctx):
     #print(f"ACC={ctx.get(dut.DATA_OUT[0:8])}")
 
 
-def run_tests():
+def run_tests(trace=False):
     global dut
 
     memory = [0 for i in range(256)]
@@ -85,9 +84,8 @@ def run_tests():
     sim = Simulator(dut)
     sim.add_clock(1e-6)
     sim.add_testbench(bench)
-    with sim.write_vcd("control_logic.vcd"):
+    if trace:
+        with sim.write_vcd("control_logic.vcd"):
+            sim.run()
+    else:
         sim.run()
-
-
-if __name__ == "__main__":
-    run_tests()

@@ -1,4 +1,3 @@
-from pymtl3 import *
 from components.Registers import *
 from components.Mux import *
 from components.Math import Alu

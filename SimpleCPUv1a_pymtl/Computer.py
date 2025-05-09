@@ -3,7 +3,9 @@ from Memory import SimpleRAM
 from SimpleCPU import SimpleCPU
 
 class Computer(Component):
-    def construct(s, init_data = []):
+    def construct(s, init_data=None):
+        if init_data is None:
+            init_data = []
         s.CLR = InPort()
         
         s.ram = SimpleRAM(init_data)

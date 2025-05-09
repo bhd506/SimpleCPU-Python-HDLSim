@@ -1,92 +1,101 @@
 import pyrtl
-from SimpleCPU import cpu
-from AsyncMemory import AsyncMemory
+from Computer import computer
 
 
-def test_simple_cpu():
+def load_program_from_dat(filename):
+    """Load a program from a .dat file into a dictionary format for memory initialization."""
+    program = {}
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                if line.strip() == '':
+                    continue
+
+                parts = line.strip().split()
+                if len(parts) >= 2:
+                    addr = int(parts[0], 16)
+                    instr = int(parts[1], 2)
+                    program[addr] = instr
+
+        print(f"Loaded {len(program)} instructions from {filename}")
+        return program
+    except Exception as e:
+        print(f"Error loading program from {filename}: {e}")
+        return {}
+
+
+def test_computer(program_path):
     # Reset PyRTL working block
     pyrtl.reset_working_block()
 
-    # Create input and output wires
+    # Create reset signal and computer
     rst = pyrtl.Input(1, 'rst')
-    data_in = pyrtl.Input(16, 'data_in')
-    data_out = pyrtl.Output(16, 'data_out')
-    addr = pyrtl.Output(8, 'addr')
-    ram_en = pyrtl.Output(1, 'ram_en')
-    ram_wr = pyrtl.Output(1, 'ram_wr')
-    rom_en = pyrtl.Output(1, 'rom_en')
+    test_program = load_program_from_dat(program_path)
+    mem = computer(rst)
 
-    # Instantiate the CPU
-    cpu(data_in, rst, data_out, addr, ram_en, ram_wr, rom_en)
+    # Access key wires for monitoring
+    block = pyrtl.working_block()
+    data_in = block.get_wirevector_by_name('cpu_data_in')
+    data_out = block.get_wirevector_by_name('cpu_data_out')
+    addr = block.get_wirevector_by_name('mem_addr')
 
-    # Create simulator
+    # Create essential probe wires
+    addr_probe = pyrtl.Output(8, 'addr_probe')
+    data_in_probe = pyrtl.Output(16, 'data_in_probe')
+    data_out_probe = pyrtl.Output(16, 'data_out_probe')
+
+    # Connect probes
+    addr_probe <<= addr
+    data_in_probe <<= data_in
+    data_out_probe <<= data_out
+
+    # Create simulator with memory initialization
     sim_trace = pyrtl.SimulationTrace()
-    sim = pyrtl.Simulation(tracer=sim_trace)
-
-    # Create memory and load program
-    memory = AsyncMemory()
-    memory.load_program([
-        0x0005,  # MOVE 5
-        0x1003,  # ADD 3
-        0x2002,  # SUB 2
-        0x3003  # AND 3
-    ])
+    sim = pyrtl.Simulation(tracer=sim_trace, memory_value_map={mem: test_program})
 
     # Test header
-    print("\n--- SimpleCPU Test ---")
-    print("Step | Addr | Data_In | Data_Out | ROM/RAM_EN/WR")
-    print("-------------------------------------------")
+    print("\n--- Computer Test ---")
+    print("Step | Addr | Data_In | Data_Out")
+    print("---------------------------")
 
     # Reset cycle
-    mem_out = memory.update(0, 0, 0, 0, 0)
-    sim.step({'rst': 1, 'data_in': mem_out})
-    print(
-        f"  0  | {sim.inspect(addr):02X}   | {mem_out:04X}    | {sim.inspect(data_out):04X}     | {int(sim.inspect(rom_en))}/{int(sim.inspect(ram_en))}/{int(sim.inspect(ram_wr))}")
+    sim.step({'rst': 1})
 
-    # Run test for 12 cycles (3 cycles per instruction * 4 instructions)
-    for step in range(1, 13):
-        # Get current CPU state
-        cpu_addr = sim.inspect(addr)
-        cpu_data_out = sim.inspect(data_out)
-        cpu_rom_en = sim.inspect(rom_en)
-        cpu_ram_en = sim.inspect(ram_en)
-        cpu_ram_wr = sim.inspect(ram_wr)
 
-        # Update memory based on CPU outputs
-        mem_out = memory.update(cpu_addr, cpu_data_out, cpu_rom_en, cpu_ram_en, cpu_ram_wr)
-        print(mem_out)
+    # Run simulation cycles
+    cycle = 0
+    disp = f" {cycle:2d}  | {sim.inspect('addr_probe'):02X}   | {sim.inspect('data_in_probe'):04X}    | "
+    while cycle <= 50:  # Limit to 10 cycles for clarity
+        cycle += 1
 
-        # Step CPU with memory output
-        sim.step({'rst': 0, 'data_in': mem_out})
+        # Step simulation (3 steps for consistency with original)
+        for _ in range(3):
+            sim.step({'rst': 0})
 
-        # Print state
-        print(
-            f" {step:2d}  | {cpu_addr:02X}   | {mem_out:04X}    | {cpu_data_out:04X}     | {int(cpu_rom_en)}/{int(cpu_ram_en)}/{int(cpu_ram_wr)}")
+        print(disp, end = "")
+        print(f"{sim.inspect('data_out_probe') % 256:02X}")
 
-    # Print wave
-    print("\nWaveform:")
-    print(sim_trace.render_trace(compact=True))
+        disp = f" {cycle:2d}  | {sim.inspect('addr_probe'):02X}   | {sim.inspect('data_in_probe'):04X}    | "
 
-    # Print memory contents
-    print("\nFinal Memory State:")
-    mem_dump = memory.dump()
-    for addr, value in mem_dump.items():
-        print(f"Memory[{addr:02X}] = {value:04X}")
+
 
     return sim_trace
 
 
-def run_test(trace=False):
-    print("\n=== SimpleCPU Test Start ===")
-    sim_trace = test_simple_cpu()
+def run_test(program_file='programs/code.dat', trace=False):
+    print("\n=== Computer Test Start ===")
+    sim_trace = test_computer(program_file)
 
     if trace:
-        with open('simplecpu_test.vcd', 'w') as f:
+        with open('computer_test.vcd', 'w') as f:
             sim_trace.print_vcd(f)
         print("VCD file generated.")
 
-    print("=== SimpleCPU Test Done ===\n")
+    print("=== Computer Test Done ===\n")
 
 
 if __name__ == "__main__":
-    run_test(trace=True)
+    import sys
+
+    program_file = sys.argv[1] if len(sys.argv) > 1 else 'programs/code.dat'
+    run_test(program_file=program_file, trace=True)

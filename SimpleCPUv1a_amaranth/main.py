@@ -1,4 +1,4 @@
-from tests.TestFDCE import run_tests
+from tests.TestComputer import run_tests
 
 if __name__ == "__main__":
     run_tests()

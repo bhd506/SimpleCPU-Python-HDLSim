@@ -1,7 +1,8 @@
 from pymtl3 import *
 
-from components.OneHotDecoder import *
 from components.FlipFlops import RingCounter
+from components.OneHotDecoder import OneHotDecoder
+
 
 class ControlLogic(Component):
     def construct(s):
