@@ -99,7 +99,7 @@ async def bench(ctx):
     ctx.set(dut.CLR, 0)
 
     # Feed a series of instructions (e.g., 0b0001 through 0b0011)
-    for _ in range(100):
+    for _ in range(500):
         DATA_IN = ctx.get(dut.DATA_IN)
         DATA_OUT = ctx.get(dut.DATA_OUT)
 

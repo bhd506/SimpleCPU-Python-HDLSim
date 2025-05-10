@@ -65,7 +65,7 @@ def test_computer(program_path):
     # Run simulation cycles
     cycle = 0
     disp = f" {cycle:2d}  | {sim.inspect('addr_probe'):02X}   | {sim.inspect('data_in_probe'):04X}    | "
-    while cycle <= 50:  # Limit to 10 cycles for clarity
+    while cycle <= 500:  # Limit to 500 cycles
         cycle += 1
 
         # Step simulation (3 steps for consistency with original)

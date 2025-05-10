@@ -37,7 +37,7 @@ def load_dat_file(filename):
     return mem
 
 
-def test_cpu(max_cycles=100):
+def test_cpu(max_cycles=500):
     print("Testing CPU with VCD tracing enabled")
 
     # Load instruction vector

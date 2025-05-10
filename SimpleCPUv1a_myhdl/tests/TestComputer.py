@@ -49,7 +49,7 @@ def ComputerTest(program_path):
 
         # Run the program until it reaches the termination instruction (0xFFFF)
         inst = 0
-        while inst <= 100:
+        while inst <= 500:
             inst += 1
 
             # Check for termination instruction
