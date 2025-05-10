@@ -1,0 +1,136 @@
+$timescale 1ns $end
+$scope module logic $end
+$var wire 1 ce ce $end
+$var wire 8 d d $end
+$var wire 1 ld ld $end
+$var wire 8 q q $end
+$var wire 1 rst rst $end
+$upscope $end
+$enddefinitions $end
+$dumpvars
+b0 ce
+b0 d
+b0 ld
+b0 q
+b1 rst
+$end
+#0
+b0 ce
+b0 d
+b0 ld
+b0 q
+b1 rst
+
+#10
+b0 ce
+b0 d
+b0 ld
+b0 q
+b0 rst
+
+#20
+b0 ce
+b0 d
+b0 ld
+b0 q
+b0 rst
+
+#30
+b0 ce
+b0 d
+b0 ld
+b0 q
+b1 rst
+
+#40
+b1 ce
+b0 d
+b0 ld
+b0 q
+b0 rst
+
+#50
+b1 ce
+b0 d
+b0 ld
+b1 q
+b0 rst
+
+#60
+b0 ce
+b0 d
+b0 ld
+b10 q
+b0 rst
+
+#70
+b1 ce
+b10101010 d
+b1 ld
+b10 q
+b0 rst
+
+#80
+b1 ce
+b0 d
+b0 ld
+b10101010 q
+b0 rst
+
+#90
+b1 ce
+b11111111 d
+b1 ld
+b10101011 q
+b0 rst
+
+#100
+b1 ce
+b0 d
+b0 ld
+b11111111 q
+b0 rst
+
+#110
+b1 ce
+b0 d
+b0 ld
+b0 q
+b0 rst
+
+#120
+b1 ce
+b0 d
+b0 ld
+b1 q
+b1 rst
+
+#130
+b1 ce
+b1000010 d
+b1 ld
+b0 q
+b0 rst
+
+#140
+b1 ce
+b0 d
+b0 ld
+b1000010 q
+b0 rst
+
+#150
+b0 ce
+b0 d
+b0 ld
+b1000011 q
+b0 rst
+
+#160
+b0 ce
+b0 d
+b0 ld
+b1000011 q
+b0 rst
+
+#170

@@ -1,0 +1,25 @@
+[*]
+[*] GTKWave Analyzer v3.3.90 (w)1999-2018 BSI
+[*] Sat May 10 19:14:57 2025
+[*]
+[dumpfile] "C:\Users\benhd\PycharmProjects\SimpleCPU-Python-HDLSim\SimpleCPUv1a_pymtl\standardised_waveforms\ALU.vcd"
+[dumpfile_mtime] "Sat May 10 19:12:43 2025"
+[dumpfile_size] 11022
+[savefile] "C:\Users\benhd\PycharmProjects\SimpleCPU-Python-HDLSim\SimpleCPUv1a_pymtl\standardised_waveforms\ALU_waveform.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*-11.800261 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 197
+[signals_width] 94
+[sst_expanded] 1
+[sst_vpaned_height] 153
+@22
+top.A[7:0]
+top.B[7:0]
+@28
+top.CTL[2:0]
+@22
+top.Y[7:0]
+[pattern_trace] 1
+[pattern_trace] 0

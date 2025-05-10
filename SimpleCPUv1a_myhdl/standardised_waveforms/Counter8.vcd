@@ -1,0 +1,1746 @@
+$date
+   Sat May 10 18:49:26 2025 UTC
+$end
+$version
+    MyHDL 0.11.51
+$end
+$timescale
+    1ns
+$end
+
+  $scope module CounterTest $end
+    $var reg 1 ! clk $end
+    $var reg 1 " CE $end
+    $var reg 8 # D $end
+    $var reg 1 $ LD $end
+    $var reg 8 % Q $end
+    $var reg 1 & rst $end
+    $scope module counter_80 $end
+      $var reg 1 ! clk $end
+      $var reg 1 & rst $end
+      $var reg 1 " CE $end
+      $var reg 1 $ LD $end
+      $var reg 8 # D $end
+      $var reg 8 % Q $end
+      $var reg 1 ' notLD $end
+      $var reg 8 ( MUX $end
+      $var reg 8 ) SUM $end
+      $var reg 8 * ZERO $end
+      $scope module mux_2_80 $end
+        $var reg 8 % A $end
+        $var reg 8 # B $end
+        $var reg 1 $ SEL $end
+        $var reg 8 ( Y $end
+        $scope module Y_bits $end
+          $var reg 1 + Y_bits(0) $end
+          $var reg 1 , Y_bits(1) $end
+          $var reg 1 - Y_bits(2) $end
+          $var reg 1 . Y_bits(3) $end
+          $var reg 1 / Y_bits(4) $end
+          $var reg 1 0 Y_bits(5) $end
+          $var reg 1 1 Y_bits(6) $end
+          $var reg 1 2 Y_bits(7) $end
+        $upscope $end
+        $scope module mux_2_10 $end
+          $var reg 1 3 A $end
+          $var reg 1 4 B $end
+          $var reg 1 $ SEL $end
+          $var reg 1 + Y $end
+          $var reg 1 5 notSEL $end
+          $var reg 1 6 AND_1 $end
+          $var reg 1 7 AND_2 $end
+          $scope module not_10 $end
+            $var reg 1 $ A $end
+            $var reg 1 5 Y $end
+          $upscope $end
+          $scope module and_20 $end
+            $var reg 1 3 A $end
+            $var reg 1 5 B $end
+            $var reg 1 6 Y $end
+          $upscope $end
+          $scope module and_21 $end
+            $var reg 1 $ A $end
+            $var reg 1 4 B $end
+            $var reg 1 7 Y $end
+          $upscope $end
+          $scope module or_20 $end
+            $var reg 1 6 A $end
+            $var reg 1 7 B $end
+            $var reg 1 + Y $end
+          $upscope $end
+        $upscope $end
+        $scope module mux_2_11 $end
+          $var reg 1 8 A $end
+          $var reg 1 9 B $end
+          $var reg 1 $ SEL $end
+          $var reg 1 , Y $end
+          $var reg 1 : notSEL $end
+          $var reg 1 ; AND_1 $end
+          $var reg 1 < AND_2 $end
+          $scope module not_11 $end
+            $var reg 1 $ A $end
+            $var reg 1 : Y $end
+          $upscope $end
+          $scope module and_22 $end
+            $var reg 1 8 A $end
+            $var reg 1 : B $end
+            $var reg 1 ; Y $end
+          $upscope $end
+          $scope module and_23 $end
+            $var reg 1 $ A $end
+            $var reg 1 9 B $end
+            $var reg 1 < Y $end
+          $upscope $end
+          $scope module or_21 $end
+            $var reg 1 ; A $end
+            $var reg 1 < B $end
+            $var reg 1 , Y $end
+          $upscope $end
+        $upscope $end
+        $scope module mux_2_12 $end
+          $var reg 1 = A $end
+          $var reg 1 > B $end
+          $var reg 1 $ SEL $end
+          $var reg 1 - Y $end
+          $var reg 1 ? notSEL $end
+          $var reg 1 @ AND_1 $end
+          $var reg 1 A AND_2 $end
+          $scope module not_12 $end
+            $var reg 1 $ A $end
+            $var reg 1 ? Y $end
+          $upscope $end
+          $scope module and_24 $end
+            $var reg 1 = A $end
+            $var reg 1 ? B $end
+            $var reg 1 @ Y $end
+          $upscope $end
+          $scope module and_25 $end
+            $var reg 1 $ A $end
+            $var reg 1 > B $end
+            $var reg 1 A Y $end
+          $upscope $end
+          $scope module or_22 $end
+            $var reg 1 @ A $end
+            $var reg 1 A B $end
+            $var reg 1 - Y $end
+          $upscope $end
+        $upscope $end
+        $scope module mux_2_13 $end
+          $var reg 1 B A $end
+          $var reg 1 C B $end
+          $var reg 1 $ SEL $end
+          $var reg 1 . Y $end
+          $var reg 1 D notSEL $end
+          $var reg 1 E AND_1 $end
+          $var reg 1 F AND_2 $end
+          $scope module not_13 $end
+            $var reg 1 $ A $end
+            $var reg 1 D Y $end
+          $upscope $end
+          $scope module and_26 $end
+            $var reg 1 B A $end
+            $var reg 1 D B $end
+            $var reg 1 E Y $end
+          $upscope $end
+          $scope module and_27 $end
+            $var reg 1 $ A $end
+            $var reg 1 C B $end
+            $var reg 1 F Y $end
+          $upscope $end
+          $scope module or_23 $end
+            $var reg 1 E A $end
+            $var reg 1 F B $end
+            $var reg 1 . Y $end
+          $upscope $end
+        $upscope $end
+        $scope module mux_2_14 $end
+          $var reg 1 G A $end
+          $var reg 1 H B $end
+          $var reg 1 $ SEL $end
+          $var reg 1 / Y $end
+          $var reg 1 I notSEL $end
+          $var reg 1 J AND_1 $end
+          $var reg 1 K AND_2 $end
+          $scope module not_14 $end
+            $var reg 1 $ A $end
+            $var reg 1 I Y $end
+          $upscope $end
+          $scope module and_28 $end
+            $var reg 1 G A $end
+            $var reg 1 I B $end
+            $var reg 1 J Y $end
+          $upscope $end
+          $scope module and_29 $end
+            $var reg 1 $ A $end
+            $var reg 1 H B $end
+            $var reg 1 K Y $end
+          $upscope $end
+          $scope module or_24 $end
+            $var reg 1 J A $end
+            $var reg 1 K B $end
+            $var reg 1 / Y $end
+          $upscope $end
+        $upscope $end
+        $scope module mux_2_15 $end
+          $var reg 1 L A $end
+          $var reg 1 M B $end
+          $var reg 1 $ SEL $end
+          $var reg 1 0 Y $end
+          $var reg 1 N notSEL $end
+          $var reg 1 O AND_1 $end
+          $var reg 1 P AND_2 $end
+          $scope module not_15 $end
+            $var reg 1 $ A $end
+            $var reg 1 N Y $end
+          $upscope $end
+          $scope module and_210 $end
+            $var reg 1 L A $end
+            $var reg 1 N B $end
+            $var reg 1 O Y $end
+          $upscope $end
+          $scope module and_211 $end
+            $var reg 1 $ A $end
+            $var reg 1 M B $end
+            $var reg 1 P Y $end
+          $upscope $end
+          $scope module or_25 $end
+            $var reg 1 O A $end
+            $var reg 1 P B $end
+            $var reg 1 0 Y $end
+          $upscope $end
+        $upscope $end
+        $scope module mux_2_16 $end
+          $var reg 1 Q A $end
+          $var reg 1 R B $end
+          $var reg 1 $ SEL $end
+          $var reg 1 1 Y $end
+          $var reg 1 S notSEL $end
+          $var reg 1 T AND_1 $end
+          $var reg 1 U AND_2 $end
+          $scope module not_16 $end
+            $var reg 1 $ A $end
+            $var reg 1 S Y $end
+          $upscope $end
+          $scope module and_212 $end
+            $var reg 1 Q A $end
+            $var reg 1 S B $end
+            $var reg 1 T Y $end
+          $upscope $end
+          $scope module and_213 $end
+            $var reg 1 $ A $end
+            $var reg 1 R B $end
+            $var reg 1 U Y $end
+          $upscope $end
+          $scope module or_26 $end
+            $var reg 1 T A $end
+            $var reg 1 U B $end
+            $var reg 1 1 Y $end
+          $upscope $end
+        $upscope $end
+        $scope module mux_2_17 $end
+          $var reg 1 V A $end
+          $var reg 1 W B $end
+          $var reg 1 $ SEL $end
+          $var reg 1 2 Y $end
+          $var reg 1 X notSEL $end
+          $var reg 1 Y AND_1 $end
+          $var reg 1 Z AND_2 $end
+          $scope module not_17 $end
+            $var reg 1 $ A $end
+            $var reg 1 X Y $end
+          $upscope $end
+          $scope module and_214 $end
+            $var reg 1 V A $end
+            $var reg 1 X B $end
+            $var reg 1 Y Y $end
+          $upscope $end
+          $scope module and_215 $end
+            $var reg 1 $ A $end
+            $var reg 1 W B $end
+            $var reg 1 Z Y $end
+          $upscope $end
+          $scope module or_27 $end
+            $var reg 1 Y A $end
+            $var reg 1 Z B $end
+            $var reg 1 2 Y $end
+          $upscope $end
+        $upscope $end
+        $scope module merge_80 $end
+          $var reg 1 + A $end
+          $var reg 1 , B $end
+          $var reg 1 - C $end
+          $var reg 1 . D $end
+          $var reg 1 / E $end
+          $var reg 1 0 F $end
+          $var reg 1 1 G $end
+          $var reg 1 2 H $end
+          $var reg 8 ( Y $end
+        $upscope $end
+      $upscope $end
+      $scope module not_18 $end
+        $var reg 1 $ A $end
+        $var reg 1 ' Y $end
+      $upscope $end
+      $scope module add_80 $end
+        $var reg 8 ( A $end
+        $var reg 8 * B $end
+        $var reg 1 ' CIN $end
+        $var reg 8 ) SUM $end
+        $scope module SUM_bits $end
+          $var reg 1 [ SUM_bits(0) $end
+          $var reg 1 \ SUM_bits(1) $end
+          $var reg 1 ] SUM_bits(2) $end
+          $var reg 1 ^ SUM_bits(3) $end
+          $var reg 1 _ SUM_bits(4) $end
+          $var reg 1 ` SUM_bits(5) $end
+          $var reg 1 a SUM_bits(6) $end
+          $var reg 1 b SUM_bits(7) $end
+        $upscope $end
+        $scope module COUTs $end
+          $var reg 1 c COUTs(0) $end
+          $var reg 1 d COUTs(1) $end
+          $var reg 1 e COUTs(2) $end
+          $var reg 1 f COUTs(3) $end
+          $var reg 1 g COUTs(4) $end
+          $var reg 1 h COUTs(5) $end
+          $var reg 1 i COUTs(6) $end
+        $upscope $end
+        $scope module full_adder0 $end
+          $var reg 1 j A $end
+          $var reg 1 k B $end
+          $var reg 1 ' CIN $end
+          $var reg 1 [ SUM $end
+          $var reg 1 c COUT $end
+          $var reg 1 l SUM_1 $end
+          $var reg 1 m COUT_1 $end
+          $var reg 1 n COUT_2 $end
+          $scope module half_adder0 $end
+            $var reg 1 j A $end
+            $var reg 1 k B $end
+            $var reg 1 l SUM $end
+            $var reg 1 m CARRY $end
+            $scope module xor_20 $end
+              $var reg 1 j A $end
+              $var reg 1 k B $end
+              $var reg 1 l Y $end
+            $upscope $end
+            $scope module and_216 $end
+              $var reg 1 j A $end
+              $var reg 1 k B $end
+              $var reg 1 m Y $end
+            $upscope $end
+          $upscope $end
+          $scope module half_adder1 $end
+            $var reg 1 ' A $end
+            $var reg 1 l B $end
+            $var reg 1 [ SUM $end
+            $var reg 1 n CARRY $end
+            $scope module xor_21 $end
+              $var reg 1 ' A $end
+              $var reg 1 l B $end
+              $var reg 1 [ Y $end
+            $upscope $end
+            $scope module and_217 $end
+              $var reg 1 ' A $end
+              $var reg 1 l B $end
+              $var reg 1 n Y $end
+            $upscope $end
+          $upscope $end
+          $scope module or_28 $end
+            $var reg 1 m A $end
+            $var reg 1 n B $end
+            $var reg 1 c Y $end
+          $upscope $end
+        $upscope $end
+        $scope module full_adder1 $end
+          $var reg 1 o A $end
+          $var reg 1 p B $end
+          $var reg 1 c CIN $end
+          $var reg 1 \ SUM $end
+          $var reg 1 d COUT $end
+          $var reg 1 q SUM_1 $end
+          $var reg 1 r COUT_1 $end
+          $var reg 1 s COUT_2 $end
+          $scope module half_adder2 $end
+            $var reg 1 o A $end
+            $var reg 1 p B $end
+            $var reg 1 q SUM $end
+            $var reg 1 r CARRY $end
+            $scope module xor_22 $end
+              $var reg 1 o A $end
+              $var reg 1 p B $end
+              $var reg 1 q Y $end
+            $upscope $end
+            $scope module and_218 $end
+              $var reg 1 o A $end
+              $var reg 1 p B $end
+              $var reg 1 r Y $end
+            $upscope $end
+          $upscope $end
+          $scope module half_adder3 $end
+            $var reg 1 c A $end
+            $var reg 1 q B $end
+            $var reg 1 \ SUM $end
+            $var reg 1 s CARRY $end
+            $scope module xor_23 $end
+              $var reg 1 c A $end
+              $var reg 1 q B $end
+              $var reg 1 \ Y $end
+            $upscope $end
+            $scope module and_219 $end
+              $var reg 1 c A $end
+              $var reg 1 q B $end
+              $var reg 1 s Y $end
+            $upscope $end
+          $upscope $end
+          $scope module or_29 $end
+            $var reg 1 r A $end
+            $var reg 1 s B $end
+            $var reg 1 d Y $end
+          $upscope $end
+        $upscope $end
+        $scope module full_adder2 $end
+          $var reg 1 t A $end
+          $var reg 1 u B $end
+          $var reg 1 d CIN $end
+          $var reg 1 ] SUM $end
+          $var reg 1 e COUT $end
+          $var reg 1 v SUM_1 $end
+          $var reg 1 w COUT_1 $end
+          $var reg 1 x COUT_2 $end
+          $scope module half_adder4 $end
+            $var reg 1 t A $end
+            $var reg 1 u B $end
+            $var reg 1 v SUM $end
+            $var reg 1 w CARRY $end
+            $scope module xor_24 $end
+              $var reg 1 t A $end
+              $var reg 1 u B $end
+              $var reg 1 v Y $end
+            $upscope $end
+            $scope module and_220 $end
+              $var reg 1 t A $end
+              $var reg 1 u B $end
+              $var reg 1 w Y $end
+            $upscope $end
+          $upscope $end
+          $scope module half_adder5 $end
+            $var reg 1 d A $end
+            $var reg 1 v B $end
+            $var reg 1 ] SUM $end
+            $var reg 1 x CARRY $end
+            $scope module xor_25 $end
+              $var reg 1 d A $end
+              $var reg 1 v B $end
+              $var reg 1 ] Y $end
+            $upscope $end
+            $scope module and_221 $end
+              $var reg 1 d A $end
+              $var reg 1 v B $end
+              $var reg 1 x Y $end
+            $upscope $end
+          $upscope $end
+          $scope module or_210 $end
+            $var reg 1 w A $end
+            $var reg 1 x B $end
+            $var reg 1 e Y $end
+          $upscope $end
+        $upscope $end
+        $scope module full_adder3 $end
+          $var reg 1 y A $end
+          $var reg 1 z B $end
+          $var reg 1 e CIN $end
+          $var reg 1 ^ SUM $end
+          $var reg 1 f COUT $end
+          $var reg 1 { SUM_1 $end
+          $var reg 1 | COUT_1 $end
+          $var reg 1 } COUT_2 $end
+          $scope module half_adder6 $end
+            $var reg 1 y A $end
+            $var reg 1 z B $end
+            $var reg 1 { SUM $end
+            $var reg 1 | CARRY $end
+            $scope module xor_26 $end
+              $var reg 1 y A $end
+              $var reg 1 z B $end
+              $var reg 1 { Y $end
+            $upscope $end
+            $scope module and_222 $end
+              $var reg 1 y A $end
+              $var reg 1 z B $end
+              $var reg 1 | Y $end
+            $upscope $end
+          $upscope $end
+          $scope module half_adder7 $end
+            $var reg 1 e A $end
+            $var reg 1 { B $end
+            $var reg 1 ^ SUM $end
+            $var reg 1 } CARRY $end
+            $scope module xor_27 $end
+              $var reg 1 e A $end
+              $var reg 1 { B $end
+              $var reg 1 ^ Y $end
+            $upscope $end
+            $scope module and_223 $end
+              $var reg 1 e A $end
+              $var reg 1 { B $end
+              $var reg 1 } Y $end
+            $upscope $end
+          $upscope $end
+          $scope module or_211 $end
+            $var reg 1 | A $end
+            $var reg 1 } B $end
+            $var reg 1 f Y $end
+          $upscope $end
+        $upscope $end
+        $scope module full_adder4 $end
+          $var reg 1 ~ A $end
+          $var reg 1 "! B $end
+          $var reg 1 f CIN $end
+          $var reg 1 _ SUM $end
+          $var reg 1 g COUT $end
+          $var reg 1 "" SUM_1 $end
+          $var reg 1 "# COUT_1 $end
+          $var reg 1 "$ COUT_2 $end
+          $scope module half_adder8 $end
+            $var reg 1 ~ A $end
+            $var reg 1 "! B $end
+            $var reg 1 "" SUM $end
+            $var reg 1 "# CARRY $end
+            $scope module xor_28 $end
+              $var reg 1 ~ A $end
+              $var reg 1 "! B $end
+              $var reg 1 "" Y $end
+            $upscope $end
+            $scope module and_224 $end
+              $var reg 1 ~ A $end
+              $var reg 1 "! B $end
+              $var reg 1 "# Y $end
+            $upscope $end
+          $upscope $end
+          $scope module half_adder9 $end
+            $var reg 1 f A $end
+            $var reg 1 "" B $end
+            $var reg 1 _ SUM $end
+            $var reg 1 "$ CARRY $end
+            $scope module xor_29 $end
+              $var reg 1 f A $end
+              $var reg 1 "" B $end
+              $var reg 1 _ Y $end
+            $upscope $end
+            $scope module and_225 $end
+              $var reg 1 f A $end
+              $var reg 1 "" B $end
+              $var reg 1 "$ Y $end
+            $upscope $end
+          $upscope $end
+          $scope module or_212 $end
+            $var reg 1 "# A $end
+            $var reg 1 "$ B $end
+            $var reg 1 g Y $end
+          $upscope $end
+        $upscope $end
+        $scope module full_adder5 $end
+          $var reg 1 "% A $end
+          $var reg 1 "& B $end
+          $var reg 1 g CIN $end
+          $var reg 1 ` SUM $end
+          $var reg 1 h COUT $end
+          $var reg 1 "' SUM_1 $end
+          $var reg 1 "( COUT_1 $end
+          $var reg 1 ") COUT_2 $end
+          $scope module half_adder10 $end
+            $var reg 1 "% A $end
+            $var reg 1 "& B $end
+            $var reg 1 "' SUM $end
+            $var reg 1 "( CARRY $end
+            $scope module xor_210 $end
+              $var reg 1 "% A $end
+              $var reg 1 "& B $end
+              $var reg 1 "' Y $end
+            $upscope $end
+            $scope module and_226 $end
+              $var reg 1 "% A $end
+              $var reg 1 "& B $end
+              $var reg 1 "( Y $end
+            $upscope $end
+          $upscope $end
+          $scope module half_adder11 $end
+            $var reg 1 g A $end
+            $var reg 1 "' B $end
+            $var reg 1 ` SUM $end
+            $var reg 1 ") CARRY $end
+            $scope module xor_211 $end
+              $var reg 1 g A $end
+              $var reg 1 "' B $end
+              $var reg 1 ` Y $end
+            $upscope $end
+            $scope module and_227 $end
+              $var reg 1 g A $end
+              $var reg 1 "' B $end
+              $var reg 1 ") Y $end
+            $upscope $end
+          $upscope $end
+          $scope module or_213 $end
+            $var reg 1 "( A $end
+            $var reg 1 ") B $end
+            $var reg 1 h Y $end
+          $upscope $end
+        $upscope $end
+        $scope module full_adder6 $end
+          $var reg 1 "* A $end
+          $var reg 1 "+ B $end
+          $var reg 1 h CIN $end
+          $var reg 1 a SUM $end
+          $var reg 1 i COUT $end
+          $var reg 1 ", SUM_1 $end
+          $var reg 1 "- COUT_1 $end
+          $var reg 1 ". COUT_2 $end
+          $scope module half_adder12 $end
+            $var reg 1 "* A $end
+            $var reg 1 "+ B $end
+            $var reg 1 ", SUM $end
+            $var reg 1 "- CARRY $end
+            $scope module xor_212 $end
+              $var reg 1 "* A $end
+              $var reg 1 "+ B $end
+              $var reg 1 ", Y $end
+            $upscope $end
+            $scope module and_228 $end
+              $var reg 1 "* A $end
+              $var reg 1 "+ B $end
+              $var reg 1 "- Y $end
+            $upscope $end
+          $upscope $end
+          $scope module half_adder13 $end
+            $var reg 1 h A $end
+            $var reg 1 ", B $end
+            $var reg 1 a SUM $end
+            $var reg 1 ". CARRY $end
+            $scope module xor_213 $end
+              $var reg 1 h A $end
+              $var reg 1 ", B $end
+              $var reg 1 a Y $end
+            $upscope $end
+            $scope module and_229 $end
+              $var reg 1 h A $end
+              $var reg 1 ", B $end
+              $var reg 1 ". Y $end
+            $upscope $end
+          $upscope $end
+          $scope module or_214 $end
+            $var reg 1 "- A $end
+            $var reg 1 ". B $end
+            $var reg 1 i Y $end
+          $upscope $end
+        $upscope $end
+        $scope module full_adder7 $end
+          $var reg 1 "/ A $end
+          $var reg 1 "0 B $end
+          $var reg 1 i CIN $end
+          $var reg 1 b SUM $end
+          $var reg 1 "1 COUT $end
+          $var reg 1 "2 SUM_1 $end
+          $var reg 1 "3 COUT_1 $end
+          $var reg 1 "4 COUT_2 $end
+          $scope module half_adder14 $end
+            $var reg 1 "/ A $end
+            $var reg 1 "0 B $end
+            $var reg 1 "2 SUM $end
+            $var reg 1 "3 CARRY $end
+            $scope module xor_214 $end
+              $var reg 1 "/ A $end
+              $var reg 1 "0 B $end
+              $var reg 1 "2 Y $end
+            $upscope $end
+            $scope module and_230 $end
+              $var reg 1 "/ A $end
+              $var reg 1 "0 B $end
+              $var reg 1 "3 Y $end
+            $upscope $end
+          $upscope $end
+          $scope module half_adder15 $end
+            $var reg 1 i A $end
+            $var reg 1 "2 B $end
+            $var reg 1 b SUM $end
+            $var reg 1 "4 CARRY $end
+            $scope module xor_215 $end
+              $var reg 1 i A $end
+              $var reg 1 "2 B $end
+              $var reg 1 b Y $end
+            $upscope $end
+            $scope module and_231 $end
+              $var reg 1 i A $end
+              $var reg 1 "2 B $end
+              $var reg 1 "4 Y $end
+            $upscope $end
+          $upscope $end
+          $scope module or_215 $end
+            $var reg 1 "3 A $end
+            $var reg 1 "4 B $end
+            $var reg 1 "1 Y $end
+          $upscope $end
+        $upscope $end
+        $scope module merge_81 $end
+          $var reg 1 [ A $end
+          $var reg 1 \ B $end
+          $var reg 1 ] C $end
+          $var reg 1 ^ D $end
+          $var reg 1 _ E $end
+          $var reg 1 ` F $end
+          $var reg 1 a G $end
+          $var reg 1 b H $end
+          $var reg 8 ) Y $end
+        $upscope $end
+      $upscope $end
+      $scope module register_80 $end
+        $var reg 1 ! clk $end
+        $var reg 1 " CE $end
+        $var reg 8 ) D $end
+        $var reg 1 & rst $end
+        $var reg 8 % Q $end
+        $scope module Q_bits $end
+          $var reg 1 "5 Q_bits(0) $end
+          $var reg 1 "6 Q_bits(1) $end
+          $var reg 1 "7 Q_bits(2) $end
+          $var reg 1 "8 Q_bits(3) $end
+          $var reg 1 "9 Q_bits(4) $end
+          $var reg 1 ": Q_bits(5) $end
+          $var reg 1 "; Q_bits(6) $end
+          $var reg 1 "< Q_bits(7) $end
+        $upscope $end
+        $scope module fdce0 $end
+          $var reg 1 ! clk $end
+          $var reg 1 & rst $end
+          $var reg 1 " CE $end
+          $var reg 1 "= D $end
+          $var reg 1 "5 Q $end
+        $upscope $end
+        $scope module fdce1 $end
+          $var reg 1 ! clk $end
+          $var reg 1 & rst $end
+          $var reg 1 " CE $end
+          $var reg 1 "> D $end
+          $var reg 1 "6 Q $end
+        $upscope $end
+        $scope module fdce2 $end
+          $var reg 1 ! clk $end
+          $var reg 1 & rst $end
+          $var reg 1 " CE $end
+          $var reg 1 "? D $end
+          $var reg 1 "7 Q $end
+        $upscope $end
+        $scope module fdce3 $end
+          $var reg 1 ! clk $end
+          $var reg 1 & rst $end
+          $var reg 1 " CE $end
+          $var reg 1 "@ D $end
+          $var reg 1 "8 Q $end
+        $upscope $end
+        $scope module fdce4 $end
+          $var reg 1 ! clk $end
+          $var reg 1 & rst $end
+          $var reg 1 " CE $end
+          $var reg 1 "A D $end
+          $var reg 1 "9 Q $end
+        $upscope $end
+        $scope module fdce5 $end
+          $var reg 1 ! clk $end
+          $var reg 1 & rst $end
+          $var reg 1 " CE $end
+          $var reg 1 "B D $end
+          $var reg 1 ": Q $end
+        $upscope $end
+        $scope module fdce6 $end
+          $var reg 1 ! clk $end
+          $var reg 1 & rst $end
+          $var reg 1 " CE $end
+          $var reg 1 "C D $end
+          $var reg 1 "; Q $end
+        $upscope $end
+        $scope module fdce7 $end
+          $var reg 1 ! clk $end
+          $var reg 1 & rst $end
+          $var reg 1 " CE $end
+          $var reg 1 "D D $end
+          $var reg 1 "< Q $end
+        $upscope $end
+        $scope module merge_82 $end
+          $var reg 1 "5 A $end
+          $var reg 1 "6 B $end
+          $var reg 1 "7 C $end
+          $var reg 1 "8 D $end
+          $var reg 1 "9 E $end
+          $var reg 1 ": F $end
+          $var reg 1 "; G $end
+          $var reg 1 "< H $end
+          $var reg 8 % Y $end
+        $upscope $end
+      $upscope $end
+    $upscope $end
+    $scope module clock_driver0 $end
+      $var reg 1 ! clk $end
+    $upscope $end
+  $upscope $end
+
+$enddefinitions $end
+
+$dumpvars
+0!
+0"
+b00000000 #
+0$
+b00000000 %
+0&
+0'
+b00000000 (
+b00000000 )
+b00000000 *
+0+
+0,
+0-
+0.
+0/
+00
+01
+02
+03
+04
+05
+06
+07
+08
+09
+0:
+0;
+0<
+0=
+0>
+0?
+0@
+0A
+0B
+0C
+0D
+0E
+0F
+0G
+0H
+0I
+0J
+0K
+0L
+0M
+0N
+0O
+0P
+0Q
+0R
+0S
+0T
+0U
+0V
+0W
+0X
+0Y
+0Z
+0[
+0\
+0]
+0^
+0_
+0`
+0a
+0b
+0c
+0d
+0e
+0f
+0g
+0h
+0i
+0j
+0k
+0l
+0m
+0n
+0o
+0p
+0q
+0r
+0s
+0t
+0u
+0v
+0w
+0x
+0y
+0z
+0{
+0|
+0}
+0~
+0"!
+0""
+0"#
+0"$
+0"%
+0"&
+0"'
+0"(
+0")
+0"*
+0"+
+0",
+0"-
+0".
+0"/
+0"0
+0"1
+0"2
+0"3
+0"4
+0"5
+0"6
+0"7
+0"8
+0"9
+0":
+0";
+0"<
+0"=
+0">
+0"?
+0"@
+0"A
+0"B
+0"C
+0"D
+$end
+1&
+1'
+1X
+1S
+1N
+1I
+1D
+1?
+1:
+15
+1[
+b00000001 )
+1"=
+#500
+1!
+#1000
+0!
+0&
+1"
+#1500
+1!
+1"5
+b00000001 %
+13
+16
+1+
+b00000001 (
+1j
+1l
+1n
+0[
+b00000000 )
+1c
+1\
+0"=
+b00000010 )
+1">
+#2000
+0!
+#2500
+1!
+1"6
+0"5
+b00000010 %
+18
+03
+06
+1;
+1,
+0+
+b00000010 (
+1o
+0j
+0l
+1q
+1s
+0\
+1[
+0n
+0c
+b00000001 )
+1d
+1]
+0">
+1"=
+1\
+0s
+0d
+b00000111 )
+1">
+1"?
+0]
+b00000011 )
+0"?
+#3000
+0!
+0"
+#3500
+1!
+#4000
+0!
+1"
+1$
+b10101010 #
+19
+1C
+1M
+1W
+05
+0:
+0?
+0D
+0I
+0N
+0S
+0X
+0'
+0[
+0;
+1Z
+1P
+1F
+1<
+1.
+10
+12
+b00000010 )
+0"=
+b10101010 (
+1y
+1"%
+1"/
+1"2
+1"'
+1{
+1^
+1`
+1b
+b10101010 )
+1"D
+1"B
+1"@
+#4500
+1!
+1"<
+1":
+1"8
+b10101010 %
+1B
+1L
+1V
+#5000
+0!
+0$
+b00000000 #
+0W
+0M
+0C
+09
+0<
+0F
+0P
+0Z
+1'
+1X
+1S
+1N
+1I
+1D
+1?
+1:
+15
+1;
+1E
+1O
+1Y
+1[
+02
+00
+0.
+0,
+b00000000 (
+b10101011 )
+12
+10
+1.
+1,
+b10101010 (
+1"=
+0"/
+0"%
+0y
+0o
+0q
+0{
+0"'
+0"2
+1o
+1y
+1"%
+1"/
+1"2
+1"'
+1{
+1q
+0b
+0`
+0^
+0\
+b00000001 )
+1\
+1^
+1`
+1b
+b10101011 )
+0"D
+0"B
+0"@
+0">
+1">
+1"@
+1"B
+1"D
+#5500
+1!
+1"5
+b10101011 %
+13
+16
+1+
+b10101011 (
+1j
+1l
+1n
+0[
+b10101010 )
+1c
+1s
+0\
+0"=
+b10101000 )
+1d
+1]
+0">
+b10101100 )
+1"?
+#6000
+0!
+1$
+b11111111 #
+14
+19
+1>
+1C
+1H
+1M
+1R
+1W
+05
+0:
+0?
+0D
+0I
+0N
+0S
+0X
+0'
+1[
+0n
+0Y
+0O
+0E
+0;
+06
+1Z
+1U
+1P
+1K
+1F
+1A
+1<
+17
+1-
+1/
+11
+0c
+b10101101 )
+1"=
+1\
+0s
+b11111111 (
+1t
+1~
+1"*
+0d
+b10101111 )
+1">
+0]
+1",
+1""
+1v
+1]
+1_
+1a
+b10101011 )
+0"?
+b11111111 )
+1"C
+1"A
+1"?
+#6500
+1!
+1";
+1"9
+1"7
+b11111111 %
+1=
+1G
+1Q
+#7000
+0!
+0$
+b00000000 #
+0W
+0R
+0M
+0H
+0C
+0>
+09
+04
+07
+0<
+0A
+0F
+0K
+0P
+0U
+0Z
+1'
+1X
+1S
+1N
+1I
+1D
+1?
+1:
+15
+16
+1;
+1@
+1E
+1J
+1O
+1T
+1Y
+1n
+0[
+02
+01
+00
+0/
+0.
+0-
+0,
+0+
+b00000000 (
+b11111110 )
+1c
+12
+11
+10
+1/
+1.
+1-
+1,
+1+
+b11111111 (
+1s
+0\
+0"=
+0"/
+0"*
+0"%
+0~
+0y
+0t
+0o
+0j
+0l
+0q
+0v
+0{
+0""
+0"'
+0",
+0"2
+b11111100 )
+1d
+1j
+1o
+1t
+1y
+1~
+1"%
+1"*
+1"/
+1"2
+1",
+1"'
+1""
+1{
+1v
+1q
+1l
+0">
+0b
+0a
+0`
+0_
+0^
+1\
+0s
+1[
+0n
+0c
+b00000111 )
+0d
+1n
+0[
+1s
+0\
+0]
+1x
+1^
+1_
+1`
+1a
+1b
+b11111000 )
+1e
+1d
+1c
+0x
+1]
+1"=
+1">
+0"@
+0"A
+0"B
+0"C
+0"D
+1\
+0s
+0d
+b11111110 )
+0e
+1s
+0\
+0]
+1x
+1}
+0^
+1"D
+1"C
+1"B
+1"A
+1"@
+0"?
+0">
+0"=
+b11110000 )
+1f
+1e
+1d
+1^
+0}
+1">
+1"?
+0x
+1]
+b11111100 )
+0e
+0f
+0]
+1x
+1}
+0^
+1"$
+0_
+0"@
+0"?
+0">
+b11100000 )
+1g
+1f
+1e
+1_
+0"$
+1^
+0}
+1"?
+1"@
+0f
+b11111000 )
+0g
+1}
+0^
+1"$
+0_
+1")
+0`
+0"A
+0"@
+0"?
+b11000000 )
+1h
+1g
+1f
+1`
+0")
+1"@
+1"A
+1_
+0"$
+0g
+b11110000 )
+0h
+1"$
+0_
+1")
+0`
+1".
+0a
+0"B
+0"A
+0"@
+b10000000 )
+1i
+1h
+1g
+1a
+0".
+1"A
+1"B
+1`
+0")
+0h
+b11100000 )
+0i
+1")
+0`
+1".
+0a
+1"4
+0b
+0"C
+0"B
+0"A
+b00000000 )
+1"1
+1i
+1h
+1b
+0"4
+1"B
+1"C
+1a
+0".
+0i
+b11000000 )
+0"1
+1".
+0a
+1"4
+0b
+0"D
+0"C
+0"B
+b00000000 )
+1"1
+1i
+1"C
+1"D
+1b
+0"4
+0"1
+b10000000 )
+1"4
+0b
+0"D
+0"C
+b00000000 )
+1"1
+1"D
+0"D
+#7500
+1!
+0"5
+0"6
+0"7
+0"8
+0"9
+0":
+0";
+0"<
+b00000000 %
+0V
+0Q
+0L
+0G
+0B
+0=
+08
+03
+06
+0;
+0@
+0E
+0J
+0O
+0T
+0Y
+02
+01
+00
+0/
+0.
+0-
+0,
+0+
+b00000000 (
+0"/
+0"*
+0"%
+0~
+0y
+0t
+0o
+0j
+0l
+0q
+0v
+0{
+0""
+0"'
+0",
+0"2
+1b
+0"4
+1a
+0".
+1`
+0")
+1_
+0"$
+1^
+0}
+0x
+1]
+1\
+0s
+1[
+0n
+0c
+b11111111 )
+0d
+0e
+0f
+0g
+0h
+0i
+0"1
+0b
+0a
+0`
+0_
+0^
+0]
+1"=
+1">
+1"?
+1"@
+1"A
+1"B
+1"C
+1"D
+0\
+b00000001 )
+0"D
+0"C
+0"B
+0"A
+0"@
+0"?
+0">
+#8000
+0!
+#8500
+1!
+1"5
+b00000001 %
+13
+16
+1+
+b00000001 (
+1j
+1l
+1n
+0[
+b00000000 )
+1c
+1\
+0"=
+b00000010 )
+1">
+#9000
+0!
+1&
+0"5
+b00000000 %
+03
+06
+0+
+b00000000 (
+0j
+0l
+1[
+0n
+0c
+b00000011 )
+1"=
+0\
+b00000001 )
+0">
+#9500
+1!
+#10000
+0!
+0&
+1$
+b01000010 #
+19
+1R
+05
+0:
+0?
+0D
+0I
+0N
+0S
+0X
+0'
+0[
+1U
+1<
+1,
+11
+b00000000 )
+0"=
+b01000010 (
+1o
+1"*
+1",
+1q
+1\
+1a
+b01000010 )
+1"C
+1">
+#10500
+1!
+1"6
+1";
+b01000010 %
+18
+1Q
+#11000
+0!
+0$
+b00000000 #
+0R
+09
+0<
+0U
+1'
+1X
+1S
+1N
+1I
+1D
+1?
+1:
+15
+1;
+1T
+1[
+01
+0,
+b00000000 (
+b01000011 )
+11
+1,
+b01000010 (
+1"=
+0"*
+0o
+0q
+0",
+1o
+1"*
+1",
+1q
+0a
+0\
+b00000001 )
+1\
+1a
+b01000011 )
+0"C
+0">
+1">
+1"C
+#11500
+1!
+1"5
+b01000011 %
+13
+16
+1+
+b01000011 (
+1j
+1l
+1n
+0[
+b01000010 )
+1c
+1s
+0\
+0"=
+b01000000 )
+1d
+1]
+0">
+b01000100 )
+1"?
+#12000

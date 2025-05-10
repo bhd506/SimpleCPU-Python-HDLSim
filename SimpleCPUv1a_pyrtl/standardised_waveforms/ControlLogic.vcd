@@ -1,0 +1,363 @@
+$timescale 1ns $end
+$scope module logic $end
+$var wire 4 a a $end
+$var wire 3 acc_ctl acc_ctl $end
+$var wire 1 acc_en acc_en $end
+$var wire 1 addr_sel addr_sel $end
+$var wire 1 data_sel data_sel $end
+$var wire 1 ir_en ir_en $end
+$var wire 1 pc_en pc_en $end
+$var wire 1 pc_ld pc_ld $end
+$var wire 1 ram_en ram_en $end
+$var wire 1 ram_wr ram_wr $end
+$var wire 1 rom_en rom_en $end
+$var wire 1 rst rst $end
+$var wire 1 z z $end
+$upscope $end
+$enddefinitions $end
+$dumpvars
+b0 a
+b100 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b0 ir_en
+b0 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b0 rom_en
+b1 rst
+b0 z
+$end
+#0
+b0 a
+b100 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b0 ir_en
+b0 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b0 rom_en
+b1 rst
+b0 z
+
+#10
+b0 a
+b100 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b1 ir_en
+b0 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b1 rom_en
+b0 rst
+b0 z
+
+#20
+b0 a
+b100 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b0 ir_en
+b1 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b0 rom_en
+b0 rst
+b0 z
+
+#30
+b0 a
+b100 acc_ctl
+b1 acc_en
+b0 addr_sel
+b0 data_sel
+b0 ir_en
+b0 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b0 rom_en
+b0 rst
+b0 z
+
+#40
+b0 a
+b100 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b1 ir_en
+b0 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b1 rom_en
+b0 rst
+b0 z
+
+#50
+b0 a
+b100 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b0 ir_en
+b1 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b0 rom_en
+b0 rst
+b0 z
+
+#60
+b1 a
+b0 acc_ctl
+b1 acc_en
+b0 addr_sel
+b0 data_sel
+b0 ir_en
+b0 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b0 rom_en
+b0 rst
+b0 z
+
+#70
+b1 a
+b0 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b1 ir_en
+b0 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b1 rom_en
+b0 rst
+b0 z
+
+#80
+b1 a
+b0 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b0 ir_en
+b1 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b0 rom_en
+b0 rst
+b0 z
+
+#90
+b100 a
+b100 acc_ctl
+b1 acc_en
+b1 addr_sel
+b1 data_sel
+b0 ir_en
+b0 pc_en
+b0 pc_ld
+b1 ram_en
+b0 ram_wr
+b0 rom_en
+b0 rst
+b0 z
+
+#100
+b100 a
+b100 acc_ctl
+b0 acc_en
+b0 addr_sel
+b1 data_sel
+b1 ir_en
+b0 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b1 rom_en
+b0 rst
+b0 z
+
+#110
+b100 a
+b100 acc_ctl
+b0 acc_en
+b1 addr_sel
+b1 data_sel
+b0 ir_en
+b1 pc_en
+b0 pc_ld
+b1 ram_en
+b0 ram_wr
+b0 rom_en
+b0 rst
+b0 z
+
+#120
+b101 a
+b0 acc_ctl
+b0 acc_en
+b1 addr_sel
+b0 data_sel
+b0 ir_en
+b0 pc_en
+b0 pc_ld
+b1 ram_en
+b1 ram_wr
+b0 rom_en
+b0 rst
+b0 z
+
+#130
+b101 a
+b0 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b1 ir_en
+b0 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b1 rom_en
+b0 rst
+b0 z
+
+#140
+b101 a
+b0 acc_ctl
+b0 acc_en
+b1 addr_sel
+b0 data_sel
+b0 ir_en
+b1 pc_en
+b0 pc_ld
+b1 ram_en
+b0 ram_wr
+b0 rom_en
+b0 rst
+b0 z
+
+#150
+b1001 a
+b0 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b0 ir_en
+b1 pc_en
+b1 pc_ld
+b0 ram_en
+b0 ram_wr
+b0 rom_en
+b0 rst
+b1 z
+
+#160
+b1001 a
+b0 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b1 ir_en
+b0 pc_en
+b1 pc_ld
+b0 ram_en
+b0 ram_wr
+b1 rom_en
+b0 rst
+b1 z
+
+#170
+b1001 a
+b0 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b0 ir_en
+b0 pc_en
+b1 pc_ld
+b0 ram_en
+b0 ram_wr
+b0 rom_en
+b0 rst
+b1 z
+
+#180
+b1001 a
+b0 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b0 ir_en
+b0 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b0 rom_en
+b0 rst
+b0 z
+
+#190
+b1001 a
+b0 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b1 ir_en
+b0 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b1 rom_en
+b0 rst
+b0 z
+
+#200
+b1001 a
+b0 acc_ctl
+b0 acc_en
+b0 addr_sel
+b0 data_sel
+b0 ir_en
+b1 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b0 rom_en
+b0 rst
+b0 z
+
+#210
+b0 a
+b100 acc_ctl
+b1 acc_en
+b0 addr_sel
+b0 data_sel
+b0 ir_en
+b0 pc_en
+b0 pc_ld
+b0 ram_en
+b0 ram_wr
+b0 rom_en
+b0 rst
+b0 z
+
+#220

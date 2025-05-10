@@ -1,0 +1,69 @@
+$timescale 1ns $end
+$scope module logic $end
+$var wire 8 a a $end
+$var wire 8 b b $end
+$var wire 3 ctl ctl $end
+$var wire 8 y y $end
+$upscope $end
+$enddefinitions $end
+$dumpvars
+b0 a
+b0 b
+b0 ctl
+b0 y
+$end
+#0
+b0 a
+b0 b
+b0 ctl
+b0 y
+
+#10
+b1111 a
+b11 b
+b0 ctl
+b10010 y
+
+#20
+b11111111 a
+b1 b
+b0 ctl
+b0 y
+
+#30
+b1010 a
+b10100 b
+b1 ctl
+b11110110 y
+
+#40
+b10100 a
+b1010 b
+b1 ctl
+b1010 y
+
+#50
+b1111 a
+b11 b
+b10 ctl
+b11 y
+
+#60
+b10101010 a
+b1010101 b
+b10 ctl
+b0 y
+
+#70
+b10101010 a
+b1010101 b
+b100 ctl
+b1010101 y
+
+#80
+b1111011 a
+b101101 b
+b100 ctl
+b101101 y
+
+#90

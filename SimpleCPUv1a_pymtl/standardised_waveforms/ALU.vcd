@@ -1,0 +1,664 @@
+$date
+  Sat May 10 20:12:43 2025
+$end
+$version
+  PyMTL 3 (Mamba)
+$end
+$timescale
+ 10ps
+$end
+
+$scope module top $end
+  $var reg 8 < Y $end
+  $var reg 8 ; B $end
+  $var reg 3 R CTL $end
+  $var reg 1 ) clk $end
+  $var reg 1 # reset $end
+  $var reg 8 ? A $end
+  $var reg 8 9 andOut $end
+  $scope module addSub $end
+    $var reg 1 # reset $end
+    $var reg 8 ; B $end
+    $var reg 8 ? A $end
+    $var reg 8 D S $end
+    $var reg 1 , COUT $end
+    $var reg 1 ! CTL $end
+    $var reg 1 ) clk $end
+    $var reg 8 2 B_processed $end
+    $scope module fa $end
+      $var reg 8 D S $end
+      $var reg 1 " carry(7) $end
+      $var reg 1 , carry(8) $end
+      $var reg 1 ! carry(0) $end
+      $var reg 8 2 B $end
+      $var reg 1 ' carry(1) $end
+      $var reg 8 ? A $end
+      $var reg 1 3 carry(6) $end
+      $var reg 1 & carry(5) $end
+      $var reg 1 ! CIN $end
+      $var reg 1 / carry(3) $end
+      $var reg 1 7 carry(4) $end
+      $var reg 1 , COUT $end
+      $var reg 1 # reset $end
+      $var reg 1 : carry(2) $end
+      $var reg 1 ) clk $end
+      $scope module full_adders(0) $end
+        $var reg 1 # reset $end
+        $var reg 1 ! CIN $end
+        $var reg 1 C A $end
+        $var reg 1 E B $end
+        $var reg 1 % S $end
+        $var reg 1 ) clk $end
+        $var reg 1 ' COUT $end
+        $scope module ha2 $end
+          $var reg 1 @ A $end
+          $var reg 1 ) clk $end
+          $var reg 1 S COUT $end
+          $var reg 1 % S $end
+          $var reg 1 # reset $end
+          $var reg 1 ! B $end
+        $upscope $end
+        $scope module ha1 $end
+          $var reg 1 E B $end
+          $var reg 1 ) clk $end
+          $var reg 1 @ S $end
+          $var reg 1 # reset $end
+          $var reg 1 T COUT $end
+          $var reg 1 C A $end
+        $upscope $end
+      $upscope $end
+      $scope module full_adders(4) $end
+        $var reg 1 L B $end
+        $var reg 1 ) clk $end
+        $var reg 1 7 CIN $end
+        $var reg 1 # reset $end
+        $var reg 1 1 S $end
+        $var reg 1 K A $end
+        $var reg 1 & COUT $end
+        $scope module ha1 $end
+          $var reg 1 > S $end
+          $var reg 1 # reset $end
+          $var reg 1 U COUT $end
+          $var reg 1 K A $end
+          $var reg 1 L B $end
+          $var reg 1 ) clk $end
+        $upscope $end
+        $scope module ha2 $end
+          $var reg 1 > A $end
+          $var reg 1 7 B $end
+          $var reg 1 ) clk $end
+          $var reg 1 1 S $end
+          $var reg 1 # reset $end
+          $var reg 1 V COUT $end
+        $upscope $end
+      $upscope $end
+      $scope module full_adders(1) $end
+        $var reg 1 * S $end
+        $var reg 1 : COUT $end
+        $var reg 1 B A $end
+        $var reg 1 ) clk $end
+        $var reg 1 F B $end
+        $var reg 1 # reset $end
+        $var reg 1 ' CIN $end
+        $scope module ha1 $end
+          $var reg 1 F B $end
+          $var reg 1 ) clk $end
+          $var reg 1 # reset $end
+          $var reg 1 W COUT $end
+          $var reg 1 B A $end
+          $var reg 1 8 S $end
+        $upscope $end
+        $scope module ha2 $end
+          $var reg 1 8 A $end
+          $var reg 1 * S $end
+          $var reg 1 ' B $end
+          $var reg 1 ) clk $end
+          $var reg 1 X COUT $end
+          $var reg 1 # reset $end
+        $upscope $end
+      $upscope $end
+      $scope module full_adders(2) $end
+        $var reg 1 H B $end
+        $var reg 1 ) clk $end
+        $var reg 1 / COUT $end
+        $var reg 1 : CIN $end
+        $var reg 1 # reset $end
+        $var reg 1 G A $end
+        $var reg 1 + S $end
+        $scope module ha1 $end
+          $var reg 1 . S $end
+          $var reg 1 G A $end
+          $var reg 1 Y COUT $end
+          $var reg 1 H B $end
+          $var reg 1 ) clk $end
+          $var reg 1 # reset $end
+        $upscope $end
+        $scope module ha2 $end
+          $var reg 1 # reset $end
+          $var reg 1 + S $end
+          $var reg 1 . A $end
+          $var reg 1 : B $end
+          $var reg 1 ) clk $end
+          $var reg 1 Z COUT $end
+        $upscope $end
+      $upscope $end
+      $scope module full_adders(7) $end
+        $var reg 1 , COUT $end
+        $var reg 1 5 B $end
+        $var reg 1 ) clk $end
+        $var reg 1 " CIN $end
+        $var reg 1 # reset $end
+        $var reg 1 6 S $end
+        $var reg 1 Q A $end
+        $scope module ha2 $end
+          $var reg 1 [ COUT $end
+          $var reg 1 A A $end
+          $var reg 1 " B $end
+          $var reg 1 ) clk $end
+          $var reg 1 6 S $end
+          $var reg 1 # reset $end
+        $upscope $end
+        $scope module ha1 $end
+          $var reg 1 ) clk $end
+          $var reg 1 A S $end
+          $var reg 1 # reset $end
+          $var reg 1 \ COUT $end
+          $var reg 1 Q A $end
+          $var reg 1 5 B $end
+        $upscope $end
+      $upscope $end
+      $scope module full_adders(3) $end
+        $var reg 1 I A $end
+        $var reg 1 0 S $end
+        $var reg 1 J B $end
+        $var reg 1 ) clk $end
+        $var reg 1 / CIN $end
+        $var reg 1 # reset $end
+        $var reg 1 7 COUT $end
+        $scope module ha1 $end
+          $var reg 1 ) clk $end
+          $var reg 1 - S $end
+          $var reg 1 # reset $end
+          $var reg 1 ] COUT $end
+          $var reg 1 I A $end
+          $var reg 1 J B $end
+        $upscope $end
+        $scope module ha2 $end
+          $var reg 1 / B $end
+          $var reg 1 ) clk $end
+          $var reg 1 0 S $end
+          $var reg 1 # reset $end
+          $var reg 1 ^ COUT $end
+          $var reg 1 - A $end
+        $upscope $end
+      $upscope $end
+      $scope module full_adders(5) $end
+        $var reg 1 N A $end
+        $var reg 1 3 COUT $end
+        $var reg 1 P B $end
+        $var reg 1 ) clk $end
+        $var reg 1 & CIN $end
+        $var reg 1 # reset $end
+        $var reg 1 ( S $end
+        $scope module ha2 $end
+          $var reg 1 ( S $end
+          $var reg 1 # reset $end
+          $var reg 1 _ COUT $end
+          $var reg 1 $ A $end
+          $var reg 1 ) clk $end
+          $var reg 1 & B $end
+        $upscope $end
+        $scope module ha1 $end
+          $var reg 1 P B $end
+          $var reg 1 ) clk $end
+          $var reg 1 $ S $end
+          $var reg 1 # reset $end
+          $var reg 1 ` COUT $end
+          $var reg 1 N A $end
+        $upscope $end
+      $upscope $end
+      $scope module full_adders(6) $end
+        $var reg 1 3 CIN $end
+        $var reg 1 # reset $end
+        $var reg 1 4 S $end
+        $var reg 1 M A $end
+        $var reg 1 " COUT $end
+        $var reg 1 O B $end
+        $var reg 1 ) clk $end
+        $scope module ha2 $end
+          $var reg 1 3 B $end
+          $var reg 1 ) clk $end
+          $var reg 1 4 S $end
+          $var reg 1 # reset $end
+          $var reg 1 a COUT $end
+          $var reg 1 = A $end
+        $upscope $end
+        $scope module ha1 $end
+          $var reg 1 # reset $end
+          $var reg 1 b COUT $end
+          $var reg 1 M A $end
+          $var reg 1 O B $end
+          $var reg 1 ) clk $end
+          $var reg 1 = S $end
+        $upscope $end
+      $upscope $end
+    $upscope $end
+  $upscope $end
+  $scope module mux $end
+    $var reg 8 9 B $end
+    $var reg 8 ; C $end
+    $var reg 2 c SEL $end
+    $var reg 8 < Y $end
+    $var reg 1 ) clk $end
+    $var reg 1 # reset $end
+    $var reg 8 D A $end
+  $upscope $end
+$upscope $end
+$enddefinitions $end
+
+b0b0 !
+b0b0 "
+b0b0 #
+b0b0 $
+b0b0 %
+b0b0 &
+b0b0 '
+b0b0 (
+b0b0 )
+b0b0 *
+b0b0 +
+b0b0 ,
+b0b0 -
+b0b0 .
+b0b0 /
+b0b0 0
+b0b0 1
+b0b00000000 2
+b0b0 3
+b0b0 4
+b0b0 5
+b0b0 6
+b0b0 7
+b0b0 8
+b0b00000000 9
+b0b0 :
+b0b00000000 ;
+b0b00000000 <
+b0b0 =
+b0b0 >
+b0b00000000 ?
+b0b0 @
+b0b0 A
+b0b0 B
+b0b0 C
+b0b00000000 D
+b0b0 E
+b0b0 F
+b0b0 G
+b0b0 H
+b0b0 I
+b0b0 J
+b0b0 K
+b0b0 L
+b0b0 M
+b0b0 N
+b0b0 O
+b0b0 P
+b0b0 Q
+b0b000 R
+b0b0 S
+b0b0 T
+b0b0 U
+b0b0 V
+b0b0 W
+b0b0 X
+b0b0 Y
+b0b0 Z
+b0b0 [
+b0b0 \
+b0b0 ]
+b0b0 ^
+b0b0 _
+b0b0 `
+b0b0 a
+b0b0 b
+b0b00 c
+
+#0
+b0b1 )
+
+b0b1 #
+b0b00000000 2
+b0b0 3
+b0b00000000 9
+b0b0 :
+b0b00000000 ;
+b0b0 =
+b0b00000000 ?
+b0b0 @
+b0b00000000 D
+b0b0 E
+b0b000 R
+b0b0 S
+b0b00 c
+
+#50
+b0b0 )
+#100
+b0b1 )
+
+
+#150
+b0b0 )
+#200
+b0b1 )
+
+
+#250
+b0b0 )
+#300
+b0b1 )
+
+b0b0 #
+
+#350
+b0b0 )
+#400
+b0b1 )
+
+b0b1 '
+b0b1 *
+b0b1 -
+b0b1 .
+b0b1 /
+b0b1 1
+b0b00000011 2
+b0b1 7
+b0b00000011 9
+b0b1 :
+b0b00000011 ;
+b0b00010010 <
+b0b00001111 ?
+b0b1 B
+b0b1 C
+b0b00010010 D
+b0b1 E
+b0b1 F
+b0b1 G
+b0b1 I
+b0b1 T
+b0b1 W
+b0b1 Z
+b0b1 ^
+
+#450
+b0b0 )
+#500
+b0b1 )
+
+b0b1 "
+b0b1 $
+b0b1 &
+b0b0 *
+b0b1 ,
+b0b0 1
+b0b00000001 2
+b0b1 3
+b0b1 8
+b0b00000001 9
+b0b00000001 ;
+b0b00000000 <
+b0b1 =
+b0b1 >
+b0b11111111 ?
+b0b1 A
+b0b00000000 D
+b0b0 F
+b0b1 K
+b0b1 M
+b0b1 N
+b0b1 Q
+b0b1 V
+b0b0 W
+b0b1 X
+b0b1 [
+b0b1 _
+b0b1 a
+
+#550
+b0b0 )
+#600
+b0b1 )
+
+b0b1 !
+b0b0 "
+b0b0 &
+b0b1 (
+b0b1 *
+b0b1 +
+b0b0 ,
+b0b0 -
+b0b0 .
+b0b0 /
+b0b1 1
+b0b11101011 2
+b0b0 3
+b0b1 4
+b0b1 5
+b0b1 6
+b0b0 8
+b0b00000000 9
+b0b00010100 ;
+b0b11110110 <
+b0b0 >
+b0b00001010 ?
+b0b1 @
+b0b0 C
+b0b11110110 D
+b0b1 F
+b0b0 G
+b0b1 J
+b0b0 K
+b0b0 M
+b0b0 N
+b0b1 O
+b0b1 P
+b0b0 Q
+b0b001 R
+b0b1 S
+b0b0 T
+b0b0 V
+b0b1 W
+b0b0 X
+b0b0 Z
+b0b0 [
+b0b1 ]
+b0b0 ^
+b0b0 _
+b0b0 a
+
+#650
+b0b0 )
+#700
+b0b1 )
+
+b0b1 "
+b0b1 &
+b0b0 (
+b0b0 +
+b0b1 ,
+b0b1 /
+b0b1 0
+b0b0 1
+b0b11110101 2
+b0b1 3
+b0b0 4
+b0b0 6
+b0b0 7
+b0b0 :
+b0b00001010 ;
+b0b00001010 <
+b0b00010100 ?
+b0b0 B
+b0b00001010 D
+b0b0 F
+b0b1 G
+b0b1 H
+b0b0 I
+b0b0 J
+b0b1 K
+b0b1 L
+b0b1 U
+b0b0 W
+b0b1 Y
+b0b1 [
+b0b0 ]
+b0b1 _
+b0b1 a
+
+#750
+b0b0 )
+#800
+b0b1 )
+
+b0b0 !
+b0b0 "
+b0b0 $
+b0b0 &
+b0b0 ,
+b0b1 -
+b0b1 .
+b0b0 0
+b0b1 1
+b0b00000011 2
+b0b0 3
+b0b0 5
+b0b1 7
+b0b00000011 9
+b0b1 :
+b0b00000011 ;
+b0b00000011 <
+b0b0 =
+b0b00001111 ?
+b0b0 @
+b0b0 A
+b0b1 B
+b0b1 C
+b0b00010010 D
+b0b1 F
+b0b0 H
+b0b1 I
+b0b0 K
+b0b0 L
+b0b0 O
+b0b0 P
+b0b010 R
+b0b0 S
+b0b1 T
+b0b0 U
+b0b1 W
+b0b0 Y
+b0b1 Z
+b0b0 [
+b0b1 ^
+b0b0 _
+b0b0 a
+b0b01 c
+
+#850
+b0b0 )
+#900
+b0b1 )
+
+b0b1 $
+b0b1 %
+b0b0 '
+b0b1 (
+b0b1 +
+b0b0 /
+b0b1 0
+b0b01010101 2
+b0b1 4
+b0b1 6
+b0b0 7
+b0b1 8
+b0b00000000 9
+b0b0 :
+b0b01010101 ;
+b0b00000000 <
+b0b1 =
+b0b1 >
+b0b10101010 ?
+b0b1 @
+b0b1 A
+b0b0 C
+b0b11111111 D
+b0b0 F
+b0b0 G
+b0b1 H
+b0b1 L
+b0b1 N
+b0b1 O
+b0b1 Q
+b0b0 T
+b0b0 W
+b0b0 Z
+b0b0 ^
+
+#950
+b0b0 )
+#1000
+b0b1 )
+
+b0b01010101 <
+b0b100 R
+b0b10 c
+
+#1050
+b0b0 )
+#1100
+b0b1 )
+
+b0b1 "
+b0b0 $
+b0b0 %
+b0b1 &
+b0b1 '
+b0b0 *
+b0b0 +
+b0b0 -
+b0b1 /
+b0b0 1
+b0b00101101 2
+b0b1 3
+b0b0 4
+b0b1 7
+b0b00101001 9
+b0b1 :
+b0b00101101 ;
+b0b00101101 <
+b0b01111011 ?
+b0b0 @
+b0b0 A
+b0b1 C
+b0b10101000 D
+b0b1 J
+b0b1 K
+b0b0 L
+b0b1 M
+b0b0 O
+b0b1 P
+b0b0 Q
+b0b1 T
+b0b1 V
+b0b1 X
+b0b1 Z
+b0b1 ]
+b0b1 `
+b0b1 a
+
+#1150
+b0b0 )
+#1200
+b0b1 )
+

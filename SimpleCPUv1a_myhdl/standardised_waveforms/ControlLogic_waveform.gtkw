@@ -1,0 +1,35 @@
+[*]
+[*] GTKWave Analyzer v3.3.90 (w)1999-2018 BSI
+[*] Sat May 10 18:53:24 2025
+[*]
+[dumpfile] "C:\Users\benhd\PycharmProjects\SimpleCPU-Python-HDLSim\SimpleCPUv1a_myhdl\standardised_waveforms\ControlLogic.vcd"
+[dumpfile_mtime] "Sat May 10 18:47:46 2025"
+[dumpfile_size] 13400
+[savefile] "C:\Users\benhd\PycharmProjects\SimpleCPU-Python-HDLSim\SimpleCPUv1a_myhdl\standardised_waveforms\ControlLogic_waveform.gtkw"
+[timestart] 0
+[size] 1000 600
+[pos] -1 -1
+*0.000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 197
+[signals_width] 126
+[sst_expanded] 1
+[sst_vpaned_height] 153
+@28
+ControlLogicTest.ACC_CTL[2:0]
+ControlLogicTest.ACC_EN
+ControlLogicTest.ADDR_SEL
+@22
+ControlLogicTest.A[3:0]
+@28
+ControlLogicTest.DATA_SEL
+ControlLogicTest.IR_EN
+ControlLogicTest.PC_EN
+ControlLogicTest.PC_LD
+ControlLogicTest.RAM_EN
+ControlLogicTest.RAM_WR
+ControlLogicTest.ROM_EN
+ControlLogicTest.Z
+ControlLogicTest.clk
+ControlLogicTest.rst
+[pattern_trace] 1
+[pattern_trace] 0
