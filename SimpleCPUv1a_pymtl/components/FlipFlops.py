@@ -71,7 +71,7 @@ class FDCE(Component):
             s.Q @= s.reg
 
 
-class RingCounter(Component):
+class RingCounter3(Component):
     def construct(s):
         # Interface
         s.CLR = InPort()

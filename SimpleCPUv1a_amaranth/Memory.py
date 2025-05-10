@@ -21,7 +21,8 @@ class RAM256x16(Elaboratable):
         mem = Memory(width=16, depth=256, init=self.init_data)
 
         # Create read and write ports
-        rp = mem.read_port(domain="neg", transparent=True)
+        #rp = mem.read_port(domain="neg", transparent=True)
+        rp = mem.read_port(domain="comb", transparent=True)
         wp = mem.write_port()
         m.submodules += [rp, wp]
 

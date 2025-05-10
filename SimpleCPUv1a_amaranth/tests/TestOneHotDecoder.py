@@ -61,7 +61,7 @@ async def bench(ctx):
 
     
 
-def run_tests(trace=False):
+def run_test(trace=False):
     global dut
     
     dut = TopModule()

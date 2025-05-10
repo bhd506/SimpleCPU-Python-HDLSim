@@ -48,7 +48,7 @@ def test_ALU():
         })
 
         # Check output against expected value
-        result = sim.inspect(y)
+        result = sim.inspect('y')
         if result == expected:
             print(f"PASS: {description} - Got {result:#04x}")
         else:

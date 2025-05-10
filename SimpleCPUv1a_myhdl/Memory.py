@@ -9,7 +9,8 @@ def ram_256x16(clk, ADDR_IN, DATA_IN, DATA_OUT, EN, WE, init_data=None):
     else:
         mem = [Signal(intbv(value)[16:]) for value in init_data]
 
-    @always_seq(clk.negedge, reset=None)
+    @always_comb
+    #@always_seq(clk.negedge, reset=None)
     def mem_logic():
         if EN:
             if WE:

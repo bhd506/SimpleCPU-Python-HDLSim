@@ -54,7 +54,6 @@ def test_cpu(max_cycles=100):
         textwave=True,  # Enable text-based waveform display
         vcdwave="computer_trace"  # Specify the VCD file name (without .vcd extension)
     ))
-
     # Reset the simulator and set CLR signal
     dut.sim_reset()
     dut.CLR @= 1

@@ -1,3 +1,3 @@
-from tests.TestRingCounter import run_test
+from tests.TestRingCounter3 import run_test
 
-run_test()
+run_test(True)

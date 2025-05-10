@@ -1,4 +1,4 @@
-from tests.TestComputer import run_test
+from tests.TestRingCounter3 import run_test
 
 if __name__ == "__main__":
-    run_test()
+    run_test(True)

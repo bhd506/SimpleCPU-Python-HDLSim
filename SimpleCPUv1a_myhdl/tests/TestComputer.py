@@ -44,12 +44,12 @@ def ComputerTest(program_path):
 
         # Reset the computer
         rst.next = True
-        yield delay(100)
+        yield delay(1000)
         rst.next = False
 
         # Run the program until it reaches the termination instruction (0xFFFF)
         inst = 0
-        while True:
+        while inst <= 100:
             inst += 1
 
             # Check for termination instruction
@@ -68,7 +68,7 @@ def ComputerTest(program_path):
                 print("")
 
             # Wait for next instruction
-            yield delay(300)
+            yield delay(3000)
 
         print("--- Computer Test Done ---\n")
         raise StopSimulation()
@@ -116,7 +116,3 @@ def run_test(trace=False, program_path = "programs/code.dat"):
     tb = ComputerTest(program_path)
     tb.config_sim(trace=trace)
     tb.run_sim()
-
-
-if __name__ == '__main__':
-    run_test()

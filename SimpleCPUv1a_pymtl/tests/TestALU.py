@@ -1,44 +1,49 @@
 from pymtl3 import *
-
 from components.Math import Alu
 
-# Test function for the ALU
-def test_alu():
+def test_alu(trace=False):
     dut = Alu()
-    
-    # Create a simulator
-    dut.apply(DefaultPassGroup())
-    
-    # Test case 1: Addition (CTL=000)
-    dut.A @= 5
-    dut.B @= 3
-    dut.CTL @= 0  # 000 - Add
-    dut.sim_eval_combinational()
-    print(f"Test Addition: A={dut.A} + B={dut.B} = {dut.Y}")
-    
-    # Test case 2: Subtraction (CTL=001)
-    dut.A @= 10
-    dut.B @= 4
-    dut.CTL @= 1  # 001 - Subtract
-    dut.sim_eval_combinational()
-    print(f"Test Subtraction: A={dut.A} - B={dut.B} = {dut.Y}")
-    
-    # Test case 3: AND (CTL=010)
-    dut.A @= 0b1010
-    dut.B @= 0b1100
-    dut.CTL @= 2  # 010 - AND
-    dut.sim_eval_combinational()
-    print(f"Test AND: A={dut.A} & B={dut.B} = {dut.Y}")
-    
-    # Test case 4: Pass B (CTL=100)
-    dut.A @= 15
-    dut.B @= 7
-    dut.CTL @= 4  # 100 - Pass B
-    dut.sim_eval_combinational()
-    print(f"Test Pass B: B={dut.B} = {dut.Y}")
-    
-    print("All ALU tests completed!")
+
+    if trace:
+        dut.apply(DefaultPassGroup(vcdwave="alu_test"))
+    else:
+        dut.apply(DefaultPassGroup())
+
+    dut.sim_reset()
+
+    # Define test vectors: (A, B, CTL, expected_Y, description)
+    test_vectors = [
+        (0, 0, 0b000, 0, "ADD: 0 + 0 = 0"),
+        (15, 3, 0b000, 18, "ADD: 15 + 3 = 18"),
+        (255, 1, 0b000, 0, "ADD with overflow: 255 + 1 = 0 (8-bit)"),
+        (10, 20, 0b001, 246, "SUB: 10 - 20 = -10 (unsigned wrap)"),
+        (20, 10, 0b001, 10, "SUB: 20 - 10 = 10"),
+        (15, 3, 0b010, 3, "AND: 15 & 3 = 3"),
+        (0xAA, 0x55, 0b010, 0x00, "AND: 0xAA & 0x55 = 0x00"),
+        (0xAA, 0x55, 0b100, 0x55, "PASS B: B = 0x55"),
+        (123, 45, 0b100, 45, "PASS B: B = 45")
+    ]
+
+    print("\n=== ALU Vector Test ===\n")
+    print(f"{'A':>4} {'B':>4} {'CTL':>5} | {'Y':>4} {'(Expected)':>10}  Description")
+    print("-" * 60)
+
+    for a, b, ctl, expected, desc in test_vectors:
+        dut.A @= a
+        dut.B @= b
+        dut.CTL @= ctl
+        dut.sim_tick()
+
+        result = int(dut.Y)
+        print(f"{a:>4} {b:>4}  {ctl:03b}  | {result:>4}     ({expected:>4})  {desc}")
+        assert result == expected, f"FAIL: {desc} → Got {result}, expected {expected}"
+
+    print("\n=== ALU Test Passed ===")
 
 
-def run_test():
-    test_alu()
+def run_test(trace=False):
+    test_alu(trace)
+
+
+if __name__ == "__main__":
+    run_test(trace=True)

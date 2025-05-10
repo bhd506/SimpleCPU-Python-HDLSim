@@ -37,8 +37,8 @@ def merge_16(A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Y):
     return logic
 
 @block
-def clock_driver(clk, period = 100):
-    @always(delay(period//2))  # 50 ns high, 50 ns low → 100 ns full period
+def clock_driver(clk, period = 1000):
+    @always(delay(period//2))  # 500 ns high, 50 ns low → 1000 ns full period
     def toggle():
             clk.next = not clk
 

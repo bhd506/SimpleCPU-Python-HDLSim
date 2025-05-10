@@ -1,3 +1,4 @@
+from amaranth import *
 from amaranth.sim import Simulator
 
 from Computer import *  # Update this with actual import
@@ -98,8 +99,7 @@ async def bench(ctx):
     ctx.set(dut.CLR, 0)
 
     # Feed a series of instructions (e.g., 0b0001 through 0b0011)
-
-    while True:
+    for _ in range(100):
         DATA_IN = ctx.get(dut.DATA_IN)
         DATA_OUT = ctx.get(dut.DATA_OUT)
 
@@ -124,7 +124,7 @@ async def bench(ctx):
 
 
 
-def run_tests(trace=False, program_path="programs/code.dat"):
+def run_test(trace=False, program_path="programs/code.dat"):
     global dut
 
     mem = load_dat_file(program_path)
@@ -138,7 +138,3 @@ def run_tests(trace=False, program_path="programs/code.dat"):
             sim.run()
     else:
         sim.run()
-
-
-if __name__ == "__main__":
-    run_tests()

@@ -110,7 +110,7 @@ def add_sub_8(A, B, CTL, SUM):
 
 
 @block
-def alu(A, B, CTL, OUT):
+def alu(A, B, CTL, Y):
     """
     8-bit Arithmetic Logic Unit (ALU) supporting ADD, SUB, AND, and PASS B operations
 
@@ -131,7 +131,7 @@ def alu(A, B, CTL, OUT):
     schematic = (
         add_sub_8(A, B, CTL(0), ADD_SUB),
         and_2(A, B, AND),
-        mux_3_8(ADD_SUB, AND, B, CTL(3, 1), OUT)
+        mux_3_8(ADD_SUB, AND, B, CTL(3, 1), Y)
     )
 
     return schematic

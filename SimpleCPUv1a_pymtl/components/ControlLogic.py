@@ -1,6 +1,6 @@
 from pymtl3 import *
 
-from components.FlipFlops import RingCounter
+from components.FlipFlops import RingCounter3
 from components.OneHotDecoder import OneHotDecoder
 
 
@@ -24,7 +24,7 @@ class ControlLogic(Component):
         s.ACC_CTL   = OutPort(3)
 
         # Submodules
-        s.rc  = RingCounter()
+        s.rc  = RingCounter3()
         s.dec = OneHotDecoder()
 
         # Internal wires
