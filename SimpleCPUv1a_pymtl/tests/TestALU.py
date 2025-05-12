@@ -1,11 +1,11 @@
 from pymtl3 import *
 from components.Math import Alu
 
-def test_alu(trace=False):
+def run_test(trace=False):
     dut = Alu()
 
     if trace:
-        dut.apply(DefaultPassGroup(vcdwave="alu_test"))
+        dut.apply(DefaultPassGroup(vcdwave="waveforms/ALU"))
     else:
         dut.apply(DefaultPassGroup())
 
@@ -39,11 +39,3 @@ def test_alu(trace=False):
         assert result == expected, f"FAIL: {desc} → Got {result}, expected {expected}"
 
     print("\n=== ALU Test Passed ===")
-
-
-def run_test(trace=False):
-    test_alu(trace)
-
-
-if __name__ == "__main__":
-    run_test(trace=True)

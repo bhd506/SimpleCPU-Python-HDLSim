@@ -1,5 +1,7 @@
+import time
+
 import pyrtl
-from Computer import computer
+from computer.Computer import computer
 
 
 def load_program_from_dat(filename):
@@ -24,7 +26,7 @@ def load_program_from_dat(filename):
         return {}
 
 
-def test_computer(program_path):
+def setup_sim(program_path):
     # Reset PyRTL working block
     pyrtl.reset_working_block()
 
@@ -49,53 +51,40 @@ def test_computer(program_path):
     data_in_probe <<= data_in
     data_out_probe <<= data_out
 
-    # Create simulator with memory initialization
     sim_trace = pyrtl.SimulationTrace()
     sim = pyrtl.Simulation(tracer=sim_trace, memory_value_map={mem: test_program})
 
-    # Test header
-    print("\n--- Computer Test ---")
-    print("Step | Addr | Data_In | Data_Out")
-    print("---------------------------")
+    return sim, sim_trace
 
+def test_computer(sim):
     # Reset cycle
     sim.step({'rst': 1})
 
-
     # Run simulation cycles
-    cycle = 0
-    disp = f" {cycle:2d}  | {sim.inspect('addr_probe'):02X}   | {sim.inspect('data_in_probe'):04X}    | "
-    while cycle <= 500:  # Limit to 500 cycles
-        cycle += 1
-
+    for _ in range(500):  # Limit to 500 cycles
+        # Check for termination instruction
+        if sim.inspect('data_in_probe') == 0xFFFF:
+            break
         # Step simulation (3 steps for consistency with original)
-        for _ in range(3):
+        for step in range(3):
             sim.step({'rst': 0})
+    else:
+        print("Cycle limit reached")
 
-        print(disp, end = "")
-        print(f"{sim.inspect('data_out_probe') % 256:02X}")
-
-        disp = f" {cycle:2d}  | {sim.inspect('addr_probe'):02X}   | {sim.inspect('data_in_probe'):04X}    | "
-
-
-
-    return sim_trace
-
-
-def run_test(program_file='programs/code.dat', trace=False):
+def run_test(trace=False, program_path='programs/code.dat'):
     print("\n=== Computer Test Start ===")
-    sim_trace = test_computer(program_file)
+    sim, sim_trace = setup_sim(program_path)
+
+    start = time.perf_counter()
+    test_computer(sim)
+    end = time.perf_counter()
+    elapsed = end - start
 
     if trace:
-        with open('computer_test.vcd', 'w') as f:
+        with open('waveforms/Computer.vcd', 'w') as f:
             sim_trace.print_vcd(f)
         print("VCD file generated.")
 
+    print(f"Simulation time: {elapsed:.6f} seconds")
+
     print("=== Computer Test Done ===\n")
-
-
-if __name__ == "__main__":
-    import sys
-
-    program_file = sys.argv[1] if len(sys.argv) > 1 else 'programs/code.dat'
-    run_test(program_file=program_file, trace=True)

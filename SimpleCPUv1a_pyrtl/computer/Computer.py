@@ -1,6 +1,6 @@
 import pyrtl
-from Memory import simple_ram
-from SimpleCPU import cpu
+from computer.Memory import simple_ram
+from computer.SimpleCPU import cpu
 
 
 def computer(rst, init_data=None):

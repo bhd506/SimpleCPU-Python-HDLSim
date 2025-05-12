@@ -1,5 +1,7 @@
+import time
+
 from pymtl3 import *
-from Computer import Computer
+from computer.Computer import Computer
 
 
 def load_dat_file(filename):
@@ -36,92 +38,63 @@ def load_dat_file(filename):
 
     return mem
 
-
-def test_cpu(max_cycles=500):
-    print("Testing CPU with VCD tracing enabled")
-
-    # Load instruction vector
-    instr_vector = load_dat_file("programs/code.dat")
+def setup_test(trace, program_file):
+    instr_vector = load_dat_file(program_file)
 
     # Create and elaborate the model
     dut = Computer(instr_vector)
     dut.elaborate()
 
-    # Apply the default pass group with VCD tracing enabled
-    # The VCD file will be named "computer_trace.vcd"
-    dut.apply(DefaultPassGroup(
-        linetrace=True,  # Enable text-based line tracing
-        textwave=True,  # Enable text-based waveform display
-        vcdwave="computer_trace"  # Specify the VCD file name (without .vcd extension)
-    ))
-    # Reset the simulator and set CLR signal
+    if trace:
+        dut.apply(DefaultPassGroup(
+            linetrace=True,  # Enable text-based line tracing
+            textwave=True,  # Enable text-based waveform display
+            vcdwave="waveforms/Computer"  # Specify the VCD file name (without .vcd extension)
+        ))
+    else:
+        dut.apply(DefaultPassGroup())
+
     dut.sim_reset()
+
+    return dut
+
+
+def test_cpu(dut):
+    # Reset the simulator and set CLR signal
     dut.CLR @= 1
     dut.sim_tick()
     dut.CLR @= 0
 
-    # Instruction opcode mapping for debugging output
-    INSTRUCTION_MAP_INV = {
-        0x0: 'move',
-        0x1: 'add',
-        0x2: 'sub',
-        0x3: 'and',
-        0x4: 'load',
-        0x5: 'store',
-        0x6: 'addm',
-        0x7: 'subm',
-        0x8: 'jumpu',
-        0x9: 'jumpz',
-        0xA: 'jumpnz',
-    }
-
-    def print_outputs(step):
-        ir_val = int(dut.cpu.ir.Q)
-        acc_val = int(dut.cpu.acc.Q)
-        opcode = (ir_val >> 12) & 0xF
-        imm_val = ir_val & 0xFF
-        instr = INSTRUCTION_MAP_INV.get(opcode, f'unknown (0x{opcode:X})')
-
-        print(f"\n--- Cycle {step} ---")
-        print(f"{'Instruction':<14}: {instr} 0x{imm_val:02X}")
-        print(f"{'IR':<14}: 0x{ir_val:04X}")
-        print(f"{'ACC':<14}: 0x{acc_val:02X}")
-
     # Run simulation for specified number of cycles or until a termination condition
-    step = 0
     try:
-        while step < max_cycles:  # Add a maximum cycle limit to prevent infinite loops
+        for _ in range(500):  # Add a maximum cycle limit to prevent infinite loops
             dut.sim_eval_combinational()
-            print_outputs(step)
+
+            # Check for termination instruction
+            if int(dut.cpu.ir.Q) == 0xFFFF:
+                break
 
             # Advance simulation by three clock cycles
             dut.sim_tick()
             dut.sim_tick()
             dut.sim_tick()
+        else:
+            print("Cycle limit reached")
 
-            step += 1
 
-            # Optional: Add termination condition based on program completion
-            # For example, if you have a HALT instruction or specific state:
-            # if is_program_complete(dut):
-            #     print("Program execution complete!")
-            #     break
 
     except Exception as e:
         print(f"Simulation stopped due to error: {e}")
-    finally:
-        print(f"\nSimulation completed after {step} steps.")
-        print(f"VCD waveform file generated: computer_trace.vcd")
-        # Optional: Print the final state of important registers
-        print(f"Final ACC value: 0x{int(dut.cpu.acc.Q):02X}")
-
-        # You can also print a summary of executed instructions, memory state, etc.
 
 
-def run_test():
-    test_cpu()
+def run_test(trace=False, program_path = "programs/code.dat"):
+    dut = setup_test(trace, program_path)
 
+    start = time.perf_counter()
 
-# Run the test if this script is executed directly
-if __name__ == "__main__":
-    run_test()
+    test_cpu(dut)  # Runs simulation (e.g., calls Simulation(...).run())
+
+    end = time.perf_counter()
+    elapsed = end - start
+
+    print(f"Simulation time: {elapsed:.6f} seconds")

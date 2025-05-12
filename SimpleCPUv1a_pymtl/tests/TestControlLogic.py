@@ -6,7 +6,7 @@ def run_test(trace=False):
     dut = ControlLogic()
 
     if trace:
-        dut.apply(DefaultPassGroup(vcdwave="control_logic"))
+        dut.apply(DefaultPassGroup(vcdwave="waveforms/ControlLogic"))
     else:
         dut.apply(DefaultPassGroup())
 
@@ -85,6 +85,3 @@ def run_test(trace=False):
 
     print("\n=== Control Logic Test Passed Successfully ===\n")
 
-
-if __name__ == "__main__":
-    run_test(trace=False)

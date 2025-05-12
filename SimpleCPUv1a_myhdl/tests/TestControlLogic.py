@@ -1,9 +1,11 @@
+import os
+
 from myhdl import *
 from components.ControlLogic import control_logic
 from Utils import clock_driver
 
 @block
-def ControlLogicTest():
+def ControlLogic():
     # Signals
     clk = Signal(False)
     rst = Signal(False)
@@ -80,6 +82,13 @@ def ControlLogicTest():
 
 
 def run_test(trace=False):
-    tb = ControlLogicTest()
+    tb = ControlLogic()
     tb.config_sim(trace=trace)
     tb.run_sim()
+
+    # Place vcd file in the waveforms directory
+    if os.path.exists("ControlLogic.vcd"):
+        os.replace("ControlLogic.vcd", "waveforms/ControlLogic.vcd")
+        print(f"VCD trace written to: waveforms")
+    else:
+        print("Warning: VCD file not found after simulation.")

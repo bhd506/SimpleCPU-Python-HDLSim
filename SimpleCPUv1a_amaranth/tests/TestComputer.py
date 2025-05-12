@@ -1,21 +1,9 @@
+import time
+
 from amaranth import *
 from amaranth.sim import Simulator
 
-from Computer import *  # Update this with actual import
-
-INSTRUCTION_MAP_INV = {
-    0x0: 'move',
-    0x1: 'add',
-    0x2: 'sub',
-    0x3: 'and',
-    0x4: 'load',
-    0x5: 'store',
-    0x6: 'addm',
-    0x7: 'subm',
-    0x8: 'jumpu',
-    0x9: 'jumpz',
-    0xA: 'jumpnz',
-}
+from computer.Computer import *  # Update this with actual import
 
 class TopModule(Elaboratable):
     def __init__(self, init_data = None):
@@ -45,16 +33,6 @@ class TopModule(Elaboratable):
         ]
 
         return m
-
-
-def parse_inst(op_code):
-    try:
-        return INSTRUCTION_MAP_INV[op_code]
-    except:
-        print(op_code)
-        raise KeyError
-
-
 
 def load_dat_file(filename):
     """
@@ -101,40 +79,32 @@ async def bench(ctx):
     # Feed a series of instructions (e.g., 0b0001 through 0b0011)
     for _ in range(500):
         DATA_IN = ctx.get(dut.DATA_IN)
-        DATA_OUT = ctx.get(dut.DATA_OUT)
 
+        await ctx.tick()
+        await ctx.tick()
+        await ctx.tick()
         if int(DATA_IN) == 0xffff:
-            print("")
-            print("Inst:  end")
-            print(f"ACC:   0x{int(DATA_OUT)%256:02X}")
-            print("")
             break
-
-        else:
-            instruction = DATA_IN//4096
-            print("")
-            print(f"Inst:  {parse_inst(int(DATA_IN)//2**12)}")
-            print(f"ACC:   0x{int(DATA_OUT)%256:02X}")
-            print("")
-
-        await ctx.tick()
-        await ctx.tick()
-        await ctx.tick()
-        
-
 
 
 def run_test(trace=False, program_path="programs/code.dat"):
     global dut
 
     mem = load_dat_file(program_path)
-    
+
     dut = TopModule(mem)
     sim = Simulator(dut)
     sim.add_clock(1e-6)
     sim.add_testbench(bench)
+
+    start_time = time.perf_counter()
+
     if trace:
-        with sim.write_vcd("Computer.vcd"):
+        with sim.write_vcd("waveforms/Computer.vcd"):
             sim.run()
     else:
         sim.run()
+
+    end_time = time.perf_counter()
+    elapsed = end_time - start_time
+    print(f"Simulation time: {elapsed:.6f} seconds")

@@ -9,7 +9,7 @@ def run_test(trace=False):
     dut = Register16bit()
 
     if trace:
-        dut.apply(DefaultPassGroup(vcdwave="register16"))
+        dut.apply(DefaultPassGroup(vcdwave="waveforms/Register16"))
     else:
         dut.apply(DefaultPassGroup())
 

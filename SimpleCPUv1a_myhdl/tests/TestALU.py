@@ -1,8 +1,10 @@
+import os
+
 from myhdl import block, instance, delay, Signal, intbv, StopSimulation
 from components.Math import alu
 
 @block
-def ALUTest():
+def ALU():
     # Create signals
     A = Signal(intbv(0)[8:])
     B = Signal(intbv(0)[8:])
@@ -49,6 +51,13 @@ def ALUTest():
 
 
 def run_test(trace=False):
-    tb = ALUTest()
+    tb = ALU()
     tb.config_sim(trace=trace)
     tb.run_sim()
+
+    # Place vcd file in the waveforms directory
+    if os.path.exists("ALU.vcd"):
+        os.replace("ALU.vcd", "waveforms/ALU.vcd")
+        print(f"VCD trace written to: waveforms")
+    else:
+        print("Warning: VCD file not found after simulation.")

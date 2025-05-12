@@ -1,5 +1,5 @@
 import pyrtl
-from Memory import simple_ram  # Adjust path as needed
+from computer.Memory import simple_ram  # Adjust path as needed
 
 def test_simple_ram():
     pyrtl.reset_working_block()
@@ -41,7 +41,7 @@ def test_simple_ram():
             'we': write_en,
         })
 
-        dout = sim.inspect(data_out)
+        dout = sim.inspect('data_out')
         result = "PASS" if dout == expected_out else "FAIL"
 
         print(f"{cycle:<6} {enable:<2}  {write_en:<2}  0x{a:02X}   0x{din:02X}  => 0x{dout:02X}   0x{expected_out:02X}   {result:<6} {desc}")
@@ -57,7 +57,7 @@ def run_test(trace=False):
     sim_trace = test_simple_ram()
 
     if trace:
-        with open("simple_ram_test.vcd", "w") as f:
+        with open("waveforms/RAM.vcd", "w") as f:
             sim_trace.print_vcd(f)
         print("\nVCD trace 'simple_ram_test.vcd' generated.")
 

@@ -118,7 +118,7 @@ def run_test(trace=False):
     sim_trace = test_control_logic()
 
     if trace:
-        with open("control_logic_test.vcd", "w") as f:
+        with open("waveforms/ControlLogic.vcd", "w") as f:
             sim_trace.print_vcd(f)
         print("\nVCD file 'control_logic_test.vcd' generated for waveform viewing.")
 

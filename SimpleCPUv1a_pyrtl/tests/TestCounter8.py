@@ -62,7 +62,7 @@ def test_counter_8():
         sim.step({'rst': rst_val, 'ce': ce_val, 'ld': ld_val, 'd': d_val})
 
         clock_dep = {
-            'q': sim.inspect(q)
+            'q': sim.inspect('q')
         }
 
         if cycle != -1:
@@ -87,7 +87,7 @@ def test_counter_8():
     else:
         # Final row
         sim.step({'rst': 0, 'ce': 0, 'ld': 0, 'd': 0})
-        clock_dep = {'q': sim.inspect(q)}
+        clock_dep = {'q': sim.inspect('q')}
         result = "PASS" if clock_dep['q'] == clock_indep['expected'] else "FAIL"
         print(
             f"{cycle:<6} {clock_indep['rst']:<4} {clock_indep['ce']:<3} {clock_indep['ld']:<3} "
@@ -103,7 +103,7 @@ def run_test(trace=False):
     sim_trace = test_counter_8()
 
     if trace:
-        with open("counter_8_test.vcd", "w") as f:
+        with open("waveforms/Counter8.vcd", "w") as f:
             sim_trace.print_vcd(f)
         print("\nVCD file 'counter_8_test.vcd' generated for waveform viewing.")
 

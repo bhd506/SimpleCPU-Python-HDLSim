@@ -74,7 +74,7 @@ def run_test(trace=False):
 
     if trace:
         # Create a VCD file for waveform viewing in external tools
-        with open('alu_test.vcd', 'w') as f:
+        with open('waveforms/ALU.vcd', 'w') as f:
             sim_trace.print_vcd(f)
         print("VCD file 'alu_test.vcd' generated for waveform viewing.")
 

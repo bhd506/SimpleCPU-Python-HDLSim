@@ -7,7 +7,7 @@ def run_test(trace=False):
     dut = Counter8bit()
 
     if trace:
-        dut.apply(DefaultPassGroup(vcdwave="counter8"))
+        dut.apply(DefaultPassGroup(vcdwave="waveforms/Counter8"))
     else:
         dut.apply(DefaultPassGroup())
 

@@ -1,9 +1,11 @@
+import os
+
 from myhdl import *
 from components.Register import counter_8
 from Utils import clock_driver
 
 @block
-def CounterTest():
+def Counter8():
     clk = Signal(False)
     rst = Signal(False)
     CE  = Signal(False)
@@ -60,6 +62,13 @@ def CounterTest():
 
 
 def run_test(trace=False):
-    tb = CounterTest()
+    tb = Counter8()
     tb.config_sim(trace=trace)
     tb.run_sim()
+
+    # Place vcd file in the waveforms directory
+    if os.path.exists("Counter8.vcd"):
+        os.replace("Counter8.vcd", "waveforms/Counter8.vcd")
+        print(f"VCD trace written to: waveforms")
+    else:
+        print("Warning: VCD file not found after simulation.")

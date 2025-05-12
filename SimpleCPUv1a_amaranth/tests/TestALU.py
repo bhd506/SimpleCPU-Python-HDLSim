@@ -67,7 +67,7 @@ def run_test(trace=False):
     sim.add_testbench(bench)
 
     if trace:
-        with sim.write_vcd("ALU_amaranth.vcd"):
+        with sim.write_vcd("waveforms/ALU.vcd"):
             sim.run()
     else:
         sim.run()

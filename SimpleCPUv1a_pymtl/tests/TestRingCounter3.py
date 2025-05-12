@@ -8,7 +8,7 @@ def run_test(trace=False):
     dut = RingCounter3()
 
     if trace:
-        dut.apply(DefaultPassGroup(vcdwave="ring_counter3"))
+        dut.apply(DefaultPassGroup(vcdwave="waveforms/RingCounter3"))
     else:
         dut.apply(DefaultPassGroup())
 

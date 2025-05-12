@@ -1,11 +1,11 @@
 from pymtl3 import *
-from Memory import SimpleRAM  # Adjust path if needed
+from computer.Memory import SimpleRAM  # Adjust path if needed
 
 def run_test(trace=False):
     dut = SimpleRAM()
 
     if trace:
-        dut.apply(DefaultPassGroup(vcdwave="simple_ram"))
+        dut.apply(DefaultPassGroup(vcdwave="waveforms/RAM"))
     else:
         dut.apply(DefaultPassGroup())
 

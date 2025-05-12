@@ -57,7 +57,7 @@ def run_test(trace=False):
     sim.add_clock(1e-7)
     sim.add_testbench(bench)
     if trace:
-        with sim.write_vcd("RingCounter3.vcd"):
+        with sim.write_vcd("waveforms/RingCounter3.vcd"):
             sim.run()
     else:
         sim.run()

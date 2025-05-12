@@ -65,7 +65,7 @@ def run_test(trace=False):
     sim.add_clock(1e-7)
     sim.add_testbench(bench)
     if trace:
-        with sim.write_vcd("Register16.vcd"):
+        with sim.write_vcd("waveforms/Register16.vcd"):
             sim.run()
     else:
         sim.run()

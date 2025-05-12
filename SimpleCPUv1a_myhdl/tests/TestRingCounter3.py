@@ -1,9 +1,11 @@
+import os
+
 from myhdl import *
 from components.FlipFlops import ring_counter
 from Utils import clock_driver
 
 @block
-def RingCounterTest():
+def RingCounter3():
     clk = Signal(False)
     rst = Signal(False)
     Q = Signal(intbv(0)[3:])
@@ -50,6 +52,13 @@ def RingCounterTest():
 
 
 def run_test(trace=False):
-    tb = RingCounterTest()
+    tb = RingCounter3()
     tb.config_sim(trace=trace)
     tb.run_sim()
+
+    # Place vcd file in the waveforms directory
+    if os.path.exists("RingCounter3.vcd"):
+        os.replace("RingCounter3.vcd", "waveforms/RingCounter3.vcd")
+        print(f"VCD trace written to: waveforms")
+    else:
+        print("Warning: VCD file not found after simulation.")

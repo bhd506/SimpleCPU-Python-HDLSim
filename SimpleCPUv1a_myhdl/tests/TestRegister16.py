@@ -1,9 +1,11 @@
+import os
+
 from myhdl import *
 from components.Register import register_16
 from Utils import clock_driver
 
 @block
-def RegisterTest():
+def Register16():
     clk = Signal(False)
     rst = Signal(False)
     CE  = Signal(False)
@@ -55,6 +57,13 @@ def RegisterTest():
 
 
 def run_test(trace=False):
-    tb = RegisterTest()
+    tb = Register16()
     tb.config_sim(trace=trace)
     tb.run_sim()
+
+    # Place vcd file in the waveforms directory
+    if os.path.exists("Register16.vcd"):
+        os.replace("Register16.vcd", "waveforms/Register16.vcd")
+        print(f"VCD trace written to: waveforms")
+    else:
+        print("Warning: VCD file not found after simulation.")

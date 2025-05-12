@@ -69,7 +69,7 @@ def run_test(trace=False):
     sim.add_clock(1e-7)
     sim.add_testbench(bench)
     if trace:
-        with sim.write_vcd("Counter8bit.vcd"):
+        with sim.write_vcd("waveforms/Counter8bit.vcd"):
             sim.run()
     else:
         sim.run()

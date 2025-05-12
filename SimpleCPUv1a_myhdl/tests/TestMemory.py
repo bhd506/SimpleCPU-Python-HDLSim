@@ -1,9 +1,11 @@
+import os
+
 from myhdl import *
-from Memory import ram_256x16  # adjust path as needed
+from computer.Memory import ram_256x16  # adjust path as needed
 from Utils import clock_driver
 
 @block
-def RAMTest():
+def RAM():
     clk = Signal(False)
     addr = Signal(intbv(0)[8:])
     din = Signal(intbv(0)[16:])
@@ -52,6 +54,13 @@ def RAMTest():
 
 
 def run_test(trace=False):
-    tb = RAMTest()
+    tb = RAM()
     tb.config_sim(trace=trace)
     tb.run_sim()
+
+    # Place vcd file in the waveforms directory
+    if os.path.exists("RAM.vcd"):
+        os.replace("RAM.vcd", "waveforms/RAM.vcd")
+        print(f"VCD trace written to: waveforms")
+    else:
+        print("Warning: VCD file not found after simulation.")

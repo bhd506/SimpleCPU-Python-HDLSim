@@ -75,15 +75,9 @@ def run_test(trace=False):
     sim_trace, passed = test_ring_counter()
 
     if trace:
-        with open('ring_counter_test.vcd', 'w') as f:
+        with open('waveforms/RingCounter3.vcd', 'w') as f:
             sim_trace.print_vcd(f)
         print("\nVCD file 'ring_counter_test.vcd' generated for waveform viewing.")
 
     print(f"\n=== Ring Counter Test {'Passed' if passed else 'Failed'} ===\n")
     return passed
-
-
-if __name__ == "__main__":
-    success = run_test(trace=True)
-    import sys
-    sys.exit(0 if success else 1)

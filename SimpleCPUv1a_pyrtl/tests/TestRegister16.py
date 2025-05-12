@@ -1,5 +1,4 @@
 import pyrtl
-import sys
 from components.Register import register
 
 
@@ -52,7 +51,7 @@ def test_register16():
 
     for rst_val, ce_val, d_val, expected_q, desc in test_vectors:
         sim.step({'rst': rst_val, 'ce': ce_val, 'd': d_val})
-        q_val = sim.inspect(q)
+        q_val = sim.inspect('q')
 
         if cycle != -1:
             result = "PASS" if q_val == clock_indep['expected'] else "FAIL"
@@ -74,7 +73,7 @@ def test_register16():
 
     # Final row
     sim.step({'rst': 0, 'ce': 0, 'd': 0})
-    q_val = sim.inspect(q)
+    q_val = sim.inspect('q')
     result = "PASS" if q_val == clock_indep['expected'] else "FAIL"
     print(
         f"{cycle:<6} {clock_indep['rst']:<4} {clock_indep['ce']:<3} "
@@ -91,14 +90,9 @@ def run_test(trace=False):
     sim_trace, passed = test_register16()
 
     if trace:
-        with open('register16_test.vcd', 'w') as f:
+        with open('waveforms/Register16.vcd', 'w') as f:
             sim_trace.print_vcd(f)
         print("\nVCD file 'register16_test.vcd' generated for waveform viewing.")
 
     print(f"\n=== Register16 Test {'Passed' if passed else 'Failed'} ===\n")
     return passed
-
-
-if __name__ == "__main__":
-    success = run_test(trace=True)
-    sys.exit(0 if success else 1)

@@ -1,31 +1,13 @@
+import os
+
+import time
+
 from myhdl import *
-from Computer import computer
+from computer.Computer import computer
 from Utils import clock_driver
 
-INSTRUCTION_MAP_INV = {
-    0x0: 'move',
-    0x1: 'add',
-    0x2: 'sub',
-    0x3: 'and',
-    0x4: 'load',
-    0x5: 'store',
-    0x6: 'addm',
-    0x7: 'subm',
-    0x8: 'jumpu',
-    0x9: 'jumpz',
-    0xA: 'jumpnz',
-}
-
-def parse_inst(op_code):
-    try:
-        return INSTRUCTION_MAP_INV[op_code]
-    except:
-        print(op_code)
-        raise KeyError
-
-
 @block
-def ComputerTest(program_path):
+def Computer(program_path):
     # Create signals
     rst = Signal(False)
     clk = Signal(False)
@@ -40,37 +22,21 @@ def ComputerTest(program_path):
 
     @instance
     def stimulus():
-        print("\n--- Computer Test Start ---\n")
-
         # Reset the computer
         rst.next = True
         yield delay(1000)
         rst.next = False
 
         # Run the program until it reaches the termination instruction (0xFFFF)
-        inst = 0
-        while inst <= 500:
-            inst += 1
-
-            # Check for termination instruction
-            if int(DATA_IN) == 0xFFFF:
-                print("")
-                print("Inst:  end")
-                print(f"ACC:   0x{int(DATA_OUT) % 256:02X}")
-                print("")
-                break
-            else:
-                # Parse and display the current instruction
-                instruction = parse_inst(int(DATA_IN) // 4096)
-                print("")
-                print(f"Inst:  {instruction}")
-                print(f"ACC:   0x{int(DATA_OUT) % 256:02X}")
-                print("")
-
+        for _ in range(500): # Always stop after 500 cycles
             # Wait for next instruction
             yield delay(3000)
+            # Check for termination instruction
+            if int(DATA_IN) == 0xFFFF:
+                break
+        else:
+            print("Cycle limit reached")
 
-        print("--- Computer Test Done ---\n")
         raise StopSimulation()
 
     return comp_inst, clock_driver(clk), stimulus
@@ -107,12 +73,27 @@ def load_dat_file(filename):
 
         print(f"Memory loaded from {filename}: {len([x for x in mem if x != 0])} non-zero words")
     except FileNotFoundError:
-        print(f"Warning: File {filename} not found. Using default memory.")
+        print(f"Warning: File {filename} not found.")
 
     return mem
 
 
-def run_test(trace=False, program_path = "programs/code.dat"):
-    tb = ComputerTest(program_path)
+def run_test(trace=False, program_path="programs/code.dat"):
+    tb = Computer(program_path)
     tb.config_sim(trace=trace)
+
+    start_time = time.perf_counter()
+
     tb.run_sim()
+
+    end_time = time.perf_counter()
+    elapsed = end_time - start_time
+
+    # Place vcd file in the waveforms directory
+    if os.path.exists("Computer.vcd"):
+        os.replace("Computer.vcd", "waveforms/Computer.vcd")
+        print(f"VCD trace written to: waveforms")
+    else:
+        print("Warning: VCD file not found after simulation.")
+
+    print(f"Simulation time: {elapsed:.6f} seconds")

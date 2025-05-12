@@ -115,7 +115,7 @@ def run_test(trace=False):
     sim.add_clock(1e-6)
     sim.add_testbench(bench)
     if trace:
-        with sim.write_vcd("control_logic.vcd"):
+        with sim.write_vcd("waveforms/ControlLogic.vcd"):
             sim.run()
     else:
         sim.run()

@@ -1,5 +1,6 @@
-from SimpleCPU import *
-from Memory import *
+from computer.SimpleCPU import *
+from computer.Memory import *
+
 
 class Computer(wiring.Component):
     DATA_OUT: Out(16)
